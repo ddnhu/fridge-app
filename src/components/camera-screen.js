@@ -4,6 +4,10 @@ import { getItems, addItem } from '../fridge-store.js';
 import { quantityStepperHTML, bindQuantityStepper } from './quantity-stepper.js';
 import { escapeHTML } from '../escape-html.js';
 
+// Food recognition is switched off for now: you type the name yourself, and
+// the ~90 MB model is never downloaded. Set to true to turn it back on.
+const RECOGNITION_ENABLED = false;
+
 // Fridge icon fills up as items are saved. Thresholds are easy to tweak here.
 const FRIDGE_STATES = [
   { max: 0,        file: 'fridge-empty.svg'  },
@@ -107,17 +111,19 @@ export function renderCameraScreen(container, { onOpenFridge }) {
     status.textContent = text;
   }
 
-  setStatus('Getting food recognition ready…');
-  loadRecognizer(pct => {
-    if (!modelReady && !captured) setStatus(`Downloading food recognition… ${pct}%`);
-  })
-    .then(() => {
-      modelReady = true;
-      if (!captured) setStatus('');
+  if (RECOGNITION_ENABLED) {
+    setStatus('Getting food recognition ready…');
+    loadRecognizer(pct => {
+      if (!modelReady && !captured) setStatus(`Downloading food recognition… ${pct}%`);
     })
-    .catch(() => {
-      if (!captured) setStatus('Food recognition unavailable — you can still type names');
-    });
+      .then(() => {
+        modelReady = true;
+        if (!captured) setStatus('');
+      })
+      .catch(() => {
+        if (!captured) setStatus('Food recognition unavailable — you can still type names');
+      });
+  }
 
   // --- fridge icon ---
 
@@ -226,6 +232,16 @@ export function renderCameraScreen(container, { onOpenFridge }) {
 
     info.hidden = false;
     updateAddButton();
+
+    if (!RECOGNITION_ENABLED) {
+      // Suggest names already in the fridge while typing
+      const names = getItems().map(item => item.name).sort();
+      options.innerHTML = names.map(name => `<option value="${escapeHTML(name)}"></option>`).join('');
+      setStatus('');
+      nameInput.focus();
+      return;
+    }
+
     setStatus(modelReady ? 'Identifying…' : 'Waiting for food recognition to download…');
 
     try {
