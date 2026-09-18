@@ -1,0 +1,72 @@
+# One food per line. Lines starting with # are ignored.
+# Any folder in training-photos/ is added automatically, so you don't need to
+# list a food here if you already have example photos for it.
+
+# Dairy & eggs
+milk
+eggs
+butter
+cheese
+yogurt
+cream
+
+# Vegetables
+carrot
+broccoli
+cauliflower
+spinach
+lettuce
+cabbage
+cucumber
+tomato
+capsicum
+zucchini
+eggplant
+mushroom
+onion
+spring onion
+garlic
+potato
+sweet potato
+pumpkin
+corn
+celery
+green beans
+peas
+asparagus
+avocado
+
+# Fruit
+apple
+banana
+orange
+lemon
+lime
+strawberries
+blueberries
+grapes
+kiwi fruit
+mango
+pineapple
+watermelon
+pear
+
+# Meat & fish
+chicken
+beef mince
+steak
+bacon
+ham
+sausages
+salmon
+prawns
+
+# Other
+tofu
+bread
+leftovers in a container
+orange juice
+jam
+soy sauce
+tomato sauce
+mayonnaise

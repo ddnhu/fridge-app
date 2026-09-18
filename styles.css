@@ -261,13 +261,46 @@ body {
   pointer-events: auto;
 }
 
+.detection-info[hidden] {
+  display: none;
+}
+
 .detection-label {
+  width: 200px;
   color: #ffffff;
-  font-size: var(--font-size-body);
+  /* 16px stops iOS Safari zooming in when the field is focused */
+  font-size: 16px;
   font-weight: 600;
+  font-family: inherit;
+  text-align: center;
   background-color: rgba(0, 0, 0, 0.5);
-  padding: 4px 14px;
+  border: none;
+  outline: none;
+  padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-full);
+}
+
+.detection-label::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.detection-label:focus {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6);
+}
+
+/* Model download progress, "Identifying…", alternative guesses, save confirmation */
+.detection-status {
+  margin: 0;
+  max-width: 280px;
+  min-height: 1.5em;
+  text-align: center;
+  color: #ffffff;
+  font-size: var(--font-size-sm);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.detection-status:empty {
+  visibility: hidden;
 }
 
 .detection-quantity {

@@ -1,0 +1,11 @@
+{
+  "name": "fridge-app-tools",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "embeddings": "node build-embeddings.mjs"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "4.3.0"
+  }
+}
