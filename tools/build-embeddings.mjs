@@ -33,6 +33,22 @@ const PROMPTS = [
   label => `a close-up photo of ${label} in a fridge.`,
 ];
 
+// Things the camera sees that aren't food. If one of these wins, the app
+// shows "Point at an item" instead of a wrong food name.
+const BACKGROUND_LABELS = [
+  'an empty fridge shelf',
+  'the inside of an empty fridge',
+  'a white wall',
+  'a floor',
+  'a table top',
+  'a person',
+  "a person's hand",
+  'a ceiling light',
+  'a kitchen cupboard',
+  'a blurry photo',
+  'a dark photo',
+];
+
 // Folder names like "spring-onion" or "spring_onion" become "spring onion"
 const folderToLabel = name => name.replace(/[-_]+/g, ' ').trim().toLowerCase();
 
@@ -81,15 +97,22 @@ async function main() {
   const tokenizer = await AutoTokenizer.from_pretrained(MODEL_ID);
   const textModel = await CLIPTextModelWithProjection.from_pretrained(MODEL_ID, { dtype: DTYPE });
 
-  const text = [];
-  for (const label of labels) {
-    const inputs = tokenizer(PROMPTS.map(p => p(label)), { padding: true, truncation: true });
+  async function embedText(prompts) {
+    const inputs = tokenizer(prompts, { padding: true, truncation: true });
     const { text_embeds } = await textModel(inputs);
     const perPrompt = text_embeds.tolist().map(normalize);
     const mean = perPrompt[0].map((_, i) => perPrompt.reduce((sum, v) => sum + v[i], 0));
-    text.push(round(normalize(mean)));
+    return round(normalize(mean));
   }
+
+  const text = [];
+  for (const label of labels) text.push(await embedText(PROMPTS.map(p => p(label))));
   console.log(`Text: ${labels.length} foods`);
+
+  // Background phrases are already full descriptions, so no food prompts
+  const background = [];
+  for (const label of BACKGROUND_LABELS) background.push(await embedText([`a photo of ${label}.`]));
+  console.log(`Background: ${BACKGROUND_LABELS.length} non-food scenes`);
 
   // --- photo fingerprints ---
   const photos = [];
@@ -116,7 +139,7 @@ async function main() {
   }
 
   await fs.mkdir(path.dirname(OUT_FILE), { recursive: true });
-  await fs.writeFile(OUT_FILE, JSON.stringify({ model: MODEL_ID, dtype: DTYPE, labels, text, photos }));
+  await fs.writeFile(OUT_FILE, JSON.stringify({ model: MODEL_ID, dtype: DTYPE, labels, text, photos, background }));
   const kb = Math.round((await fs.stat(OUT_FILE)).size / 1024);
   console.log(`Wrote ${path.relative(ROOT, OUT_FILE)} (${kb} KB)`);
 }

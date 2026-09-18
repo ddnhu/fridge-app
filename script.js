@@ -4,7 +4,7 @@ import { renderFridgeScreen } from './src/components/fridge-screen.js';
 const app = document.getElementById('app');
 
 function showCamera() {
-  renderCameraScreen(app, { onOpenFridge: showFridge });
+  renderCameraScreen(app, { onContinue: showFridge });
 }
 
 function showFridge() {

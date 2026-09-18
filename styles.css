@@ -85,21 +85,6 @@ body {
   display: block;
 }
 
-/* Fridge icon bounce — triggers when the icon variant changes */
-@keyframes fridge-bounce {
-  0%   { transform: scale(1);    }
-  18%  { transform: scale(1.32); }
-  40%  { transform: scale(0.86); }
-  62%  { transform: scale(1.14); }
-  78%  { transform: scale(0.95); }
-  90%  { transform: scale(1.04); }
-  100% { transform: scale(1);    }
-}
-
-.fridge-icon.bouncing {
-  animation: fridge-bounce 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
-}
-
 .capture-flash {
   position: absolute;
   inset: 0;
@@ -166,8 +151,8 @@ body {
   opacity: 0.85;
 }
 
-.btn-retake,
-.btn-library {
+.btn-undo,
+.btn-continue {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -183,38 +168,16 @@ body {
   justify-content: center;
 }
 
-.btn-library {
+.btn-undo {
   left: 20px;
 }
 
-.fridge-badge {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 16px;
-  height: 16px;
-  border-radius: var(--radius-full);
-  background-color: #ff3b30;
-  color: #ffffff;
-  font-size: 10px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-/* display: flex above overrides [hidden]'s display: none — this restores it */
-.fridge-badge[hidden] {
-  display: none;
-}
-
-.btn-retake {
+.btn-continue {
   right: 20px;
 }
 
-
-.btn-retake.is-waiting {
+/* Undo with nothing to undo */
+.btn-undo.is-waiting {
   opacity: 0.4;
 }
 

@@ -68,8 +68,9 @@ function dot(a, b) {
   return sum;
 }
 
-// Returns { guesses: [{ label, score }] most likely first, embedding } for a
-// canvas. Pass the embedding to learn() once the user confirms the name.
+// Returns { isFood, guesses: [{ label, score }] most likely first, embedding }
+// for a canvas. isFood is false when a non-food scene (empty shelf, hand…)
+// beats every food. Pass the embedding to learn() once the user confirms.
 export async function recognize(canvas, topK = 3) {
   const { processor, model, data, RawImage } = await loadRecognizer();
 
@@ -103,6 +104,10 @@ export async function recognize(canvas, topK = 3) {
     scores.set(label, (scores.get(label) ?? baseline) + boost);
   }
 
+  // Non-food scenes compete too, but never show up as guesses
+  const bestBackground = Math.max(...(data.background ?? []).map(b => TEXT_SCALE * dot(embedding, b)));
+  const isFood = Math.max(...scores.values()) > bestBackground;
+
   // Softmax so scores read as rough confidences that sum to 1
   const entries = [...scores.entries()];
   const max = Math.max(...entries.map(([, l]) => l));
@@ -113,5 +118,5 @@ export async function recognize(canvas, topK = 3) {
     .map(([label, x]) => ({ label, score: x / total }))
     .sort((a, b) => b.score - a.score)
     .slice(0, topK);
-  return { guesses, embedding };
+  return { isFood, guesses, embedding };
 }

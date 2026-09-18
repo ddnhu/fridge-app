@@ -1,25 +1,27 @@
 import { loadRecognizer, recognize, getKnownLabels } from '../recognizer.js';
-import { learn } from '../learned-examples.js';
-import { getItems, addItem } from '../fridge-store.js';
+import { learn, unlearnLast } from '../learned-examples.js';
+import { getItems, addItem, removeQuantity } from '../fridge-store.js';
 import { quantityStepperHTML, bindQuantityStepper } from './quantity-stepper.js';
 import { escapeHTML } from '../escape-html.js';
 
-// Food recognition is switched off for now: you type the name yourself, and
-// the ~90 MB model is never downloaded. Set to true to turn it back on.
-const RECOGNITION_ENABLED = false;
+// Set to false to skip the ~90 MB model download: nothing is detected, and
+// the shutter pauses the camera so you can type the name instead.
+const RECOGNITION_ENABLED = true;
 
-// Fridge icon fills up as items are saved. Thresholds are easy to tweak here.
-const FRIDGE_STATES = [
-  { max: 0,        file: 'fridge-empty.svg'  },
-  { max: 8,        file: 'fridge-low.svg'    },
-  { max: 16,       file: 'fridge-medium.svg' },
-  { max: Infinity, file: 'fridge-full.svg'   },
-];
+// Live detection: how often to look, and how many looks in a row must agree
+// before the label changes (stops it flickering while the phone moves)
+const DETECT_INTERVAL_MS = 400;
+const STABLE_FRAMES = 2;
 
-export function renderCameraScreen(container, { onOpenFridge }) {
+// Flow:
+//   live   — camera runs; the item in the frame is named automatically.
+//            Tap the screen to pause. Shutter adds the named item.
+//   paused — frozen photo; edit the name (type or tap a guess) and quantity.
+//            Shutter adds it and resumes. Tapping the photo resumes without adding.
+export function renderCameraScreen(container, { onContinue }) {
   container.innerHTML = `
     <video class="camera-bg" autoplay playsinline muted></video>
-    <section class="camera-screen" aria-label="Camera capture">
+    <section class="camera-screen" aria-label="Camera">
       <div class="preview-area">
         <video class="camera-video" autoplay playsinline muted></video>
         <img class="camera-still" alt="" aria-hidden="true" />
@@ -32,7 +34,7 @@ export function renderCameraScreen(container, { onOpenFridge }) {
           <div class="detection-info" hidden>
             <label class="detection-name">
               <input class="detection-label" type="text" list="food-options" enterkeyhint="done"
-                     autocomplete="off" autocapitalize="none" spellcheck="false"
+                     autocomplete="off" autocapitalize="none" spellcheck="false" readonly
                      placeholder="Type what it is" aria-label="Food name" />
               <svg class="detection-edit" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M10.5 3.5L12.5 5.5M3 13L3.5 10.5L11 3L13 5L5.5 12.5L3 13Z" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -46,11 +48,14 @@ export function renderCameraScreen(container, { onOpenFridge }) {
         </div>
       </div>
       <div class="controls">
-        <button class="btn-library" type="button" aria-label="Open fridge">
-          <img class="fridge-icon" src="src/components/icons/fridge-empty.svg" width="70" height="70" alt="" aria-hidden="true" />
+        <button class="btn-undo" type="button" aria-label="Undo last add">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <path d="M12 8L6 14L12 20" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 14H19C23 14 26 17 26 21C26 25 23 28 19 28H14" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
         </button>
-        <button class="btn-capture" type="button" aria-label="Capture photo"></button>
-        <button class="btn-retake" type="button" aria-label="Add to fridge">
+        <button class="btn-capture" type="button" aria-label="Add to fridge"></button>
+        <button class="btn-continue" type="button" aria-label="Continue to your fridge">
           <img src="src/components/icons/arrow-forward.svg" width="50" height="50" alt="" aria-hidden="true" />
         </button>
       </div>
@@ -58,27 +63,34 @@ export function renderCameraScreen(container, { onOpenFridge }) {
     <canvas class="camera-canvas" hidden></canvas>
   `;
 
-  const bgVideo    = container.querySelector('.camera-bg');
-  const video      = container.querySelector('.camera-video');
-  const still      = container.querySelector('.camera-still');
-  const canvas     = container.querySelector('.camera-canvas');
-  const message    = container.querySelector('.preview-message');
-  const status     = container.querySelector('.detection-status');
-  const info       = container.querySelector('.detection-info');
-  const nameInput  = container.querySelector('.detection-label');
-  const options    = container.querySelector('#food-options');
-  const guessList  = container.querySelector('.detection-guesses');
-  const frame      = container.querySelector('.detection-frame');
-  const captureBtn = container.querySelector('.btn-capture');
-  const addBtn     = container.querySelector('.btn-retake');
-  const fridgeIcon = container.querySelector('.fridge-icon');
-  const fridgeBtn  = container.querySelector('.btn-library');
+  const bgVideo     = container.querySelector('.camera-bg');
+  const video       = container.querySelector('.camera-video');
+  const still       = container.querySelector('.camera-still');
+  const canvas      = container.querySelector('.camera-canvas');
+  const previewArea = container.querySelector('.preview-area');
+  const message     = container.querySelector('.preview-message');
+  const status      = container.querySelector('.detection-status');
+  const info        = container.querySelector('.detection-info');
+  const nameInput   = container.querySelector('.detection-label');
+  const options     = container.querySelector('#food-options');
+  const guessList   = container.querySelector('.detection-guesses');
+  const frame       = container.querySelector('.detection-frame');
+  const captureBtn  = container.querySelector('.btn-capture');
+  const undoBtn     = container.querySelector('.btn-undo');
+  const continueBtn = container.querySelector('.btn-continue');
 
-  let stream    = null;
-  let captured  = false;
-  let captureId = 0; // ignores recognition results from a photo that was retaken
+  let stream     = null;
+  let active     = true;   // false once we leave this screen
+  let mode       = 'live'; // 'live' | 'paused'
   let modelReady = false;
-  let embedding  = null; // fingerprint of the current photo, learned on save
+  let detection  = null;   // latest stable result: { label, guesses, embedding }, or null if no food
+  let lastLabel  = undefined;
+  let streak     = 0;
+  const history  = [];     // adds made on this screen, newest last, for undo
+
+  function setStatus(text) {
+    status.textContent = text;
+  }
 
   // --- camera start ---
 
@@ -95,7 +107,7 @@ export function renderCameraScreen(container, { onOpenFridge }) {
         return Promise.all([bgVideo.play(), video.play()]);
       })
       .then(() => {
-        video.classList.add('active');
+        if (mode === 'live') video.classList.add('active');
         message.hidden = true;
       })
       .catch(() => {
@@ -107,57 +119,164 @@ export function renderCameraScreen(container, { onOpenFridge }) {
 
   // --- recognition model (downloads in the background) ---
 
-  function setStatus(text) {
-    status.textContent = text;
-  }
-
   if (RECOGNITION_ENABLED) {
     setStatus('Getting food recognition ready…');
     loadRecognizer(pct => {
-      if (!modelReady && !captured) setStatus(`Downloading food recognition… ${pct}%`);
+      if (!modelReady && mode === 'live') setStatus(`Downloading food recognition… ${pct}%`);
     })
-      .then(() => {
+      .then(async () => {
         modelReady = true;
-        if (!captured) setStatus('');
+        if (mode === 'live') setStatus('Point at an item');
+        await fillSuggestions();
+        detectLoop();
       })
       .catch(() => {
-        if (!captured) setStatus('Food recognition unavailable — you can still type names');
+        if (mode === 'live') setStatus('Food recognition unavailable — tap the shutter to type a name');
       });
+  } else {
+    setStatus('Tap the shutter to add an item');
   }
 
-  // --- fridge icon ---
-
-  function updateFridgeIcon({ animate = false } = {}) {
-    const count = getItems().length;
-    const file = FRIDGE_STATES.find(s => count <= s.max).file;
-    const src = `src/components/icons/${file}`;
-    if (fridgeIcon.getAttribute('src') === src) return;
-    fridgeIcon.src = src;
-    if (animate) {
-      // Re-trigger the bounce: remove, force reflow, re-add
-      fridgeIcon.classList.remove('bouncing');
-      void fridgeIcon.offsetWidth;
-      fridgeIcon.classList.add('bouncing');
-    }
+  // Type-ahead suggestions: every known food plus names already in the fridge
+  async function fillSuggestions() {
+    const known = modelReady ? await getKnownLabels() : [];
+    const names = [...new Set([...known, ...getItems().map(item => item.name)])].sort();
+    options.innerHTML = names.map(name => `<option value="${escapeHTML(name)}"></option>`).join('');
   }
-
-  updateFridgeIcon();
 
   // --- quantity ---
 
   const stepper = bindQuantityStepper(info);
 
-  // --- capture / retake ---
+  // --- live detection ---
 
-  // The button always responds (see click handler); this only dims it until
-  // there's a photo and a name, so it's clear it isn't ready yet
-  function updateAddButton() {
-    addBtn.classList.toggle('is-waiting', !captured || nameInput.value.trim() === '');
+  // The part of the camera image inside the corner frame, in video pixels.
+  // The preview uses object-fit: cover, so undo that scaling and offset.
+  function frameCrop() {
+    const vr = video.getBoundingClientRect();
+    const fr = frame.getBoundingClientRect();
+    const scale = Math.max(vr.width / video.videoWidth, vr.height / video.videoHeight);
+    const offsetX = (vr.width  - video.videoWidth  * scale) / 2;
+    const offsetY = (vr.height - video.videoHeight * scale) / 2;
+    const x = Math.max(0, (fr.left - vr.left - offsetX) / scale);
+    const y = Math.max(0, (fr.top  - vr.top  - offsetY) / scale);
+    return {
+      x, y,
+      w: Math.min(video.videoWidth  - x, fr.width  / scale),
+      h: Math.min(video.videoHeight - y, fr.height / scale),
+    };
   }
 
-  updateAddButton();
+  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-  // Guess chips: tapping one sets the name; the current name is highlighted
+  async function detectLoop() {
+    while (active) {
+      const canLook = mode === 'live' && stream && video.readyState >= 2 && !document.hidden;
+      if (canLook) {
+        // Only what's inside the frame is looked at, so shelves and
+        // neighbouring items don't confuse it
+        const crop = frameCrop();
+        canvas.width  = Math.round(crop.w);
+        canvas.height = Math.round(crop.h);
+        canvas.getContext('2d').drawImage(video, crop.x, crop.y, crop.w, crop.h, 0, 0, canvas.width, canvas.height);
+        try {
+          const result = await recognize(canvas);
+          // Ignore a result that finished after the user paused
+          if (active && mode === 'live') handleResult(result);
+        } catch {
+          // One bad frame — just try the next one
+        }
+      }
+      await sleep(DETECT_INTERVAL_MS);
+    }
+  }
+
+  function handleResult(result) {
+    const label = result.isFood ? result.guesses[0].label : null;
+    streak = label === lastLabel ? streak + 1 : 1;
+    lastLabel = label;
+
+    // Keep the embedding fresh even while the label holds steady
+    if (detection && label === detection.label) detection.embedding = result.embedding;
+    if (streak < STABLE_FRAMES) return;
+
+    if (label === null) {
+      detection = null;
+      showLiveInfo();
+      return;
+    }
+    if (detection?.label !== label) {
+      detection = { label, guesses: result.guesses.map(g => g.label), embedding: result.embedding };
+      showLiveInfo();
+    }
+  }
+
+  function showLiveInfo() {
+    if (detection) {
+      nameInput.value = detection.label;
+      info.hidden = false;
+      setStatus('Tap the screen to edit');
+    } else {
+      info.hidden = true;
+      setStatus('Point at an item');
+    }
+  }
+
+  // --- pause / resume ---
+
+  function pause() {
+    mode = 'paused';
+
+    // Freeze on the current frame
+    if (stream && video.readyState >= 2) {
+      const full = document.createElement('canvas');
+      full.width  = video.videoWidth;
+      full.height = video.videoHeight;
+      full.getContext('2d').drawImage(video, 0, 0);
+      still.src = full.toDataURL('image/jpeg', 0.85);
+      still.classList.add('active');
+      video.classList.remove('active');
+    }
+
+    nameInput.readOnly = false;
+    if (!detection) nameInput.value = '';
+    renderGuesses(detection ? detection.guesses : []);
+    info.hidden = false;
+    setStatus('Tap the photo to go back to the camera');
+  }
+
+  function resume() {
+    mode = 'live';
+    still.classList.remove('active');
+    still.removeAttribute('src');
+    if (stream) video.classList.add('active');
+    nameInput.readOnly = true;
+    nameInput.blur();
+    guessList.innerHTML = '';
+    stepper.set(1);
+    if (RECOGNITION_ENABLED && modelReady) {
+      showLiveInfo();
+    } else {
+      info.hidden = true;
+      setStatus(RECOGNITION_ENABLED ? '' : 'Tap the shutter to add an item');
+    }
+  }
+
+  // Live: any tap on the preview pauses. The tap still reaches what it hit,
+  // so tapping the name starts typing and tapping +/− changes the quantity.
+  // Paused: tapping the photo (not the name, guesses or quantity) resumes.
+  previewArea.addEventListener('click', e => {
+    const onControls = e.target.closest('.detection-info');
+    if (mode === 'live') {
+      pause();
+      if (e.target === nameInput) nameInput.focus();
+    } else if (!onControls) {
+      resume();
+    }
+  });
+
+  // --- guesses (paused only) ---
+
   function renderGuesses(labels) {
     guessList.innerHTML = labels
       .map(label => `<button class="guess-chip" type="button">${escapeHTML(label)}</button>`)
@@ -177,150 +296,81 @@ export function renderCameraScreen(container, { onOpenFridge }) {
     if (!chip) return;
     nameInput.value = chip.textContent;
     highlightGuess();
-    updateAddButton();
   });
-
-  function showLive() {
-    captured = false;
-    captureId += 1;
-    embedding = null;
-    still.classList.remove('active');
-    still.removeAttribute('src');
-    if (stream) video.classList.add('active');
-    info.hidden = true;
-    nameInput.value = '';
-    guessList.innerHTML = '';
-    stepper.set(1);
-    captureBtn.setAttribute('aria-label', 'Capture photo');
-    updateAddButton();
-  }
-
-  // The part of the camera image inside the corner frame, in video pixels.
-  // The preview uses object-fit: cover, so undo that scaling and offset.
-  function frameCrop() {
-    const vr = video.getBoundingClientRect();
-    const fr = frame.getBoundingClientRect();
-    const scale = Math.max(vr.width / video.videoWidth, vr.height / video.videoHeight);
-    const offsetX = (vr.width  - video.videoWidth  * scale) / 2;
-    const offsetY = (vr.height - video.videoHeight * scale) / 2;
-    const x = Math.max(0, (fr.left - vr.left - offsetX) / scale);
-    const y = Math.max(0, (fr.top  - vr.top  - offsetY) / scale);
-    return {
-      x, y,
-      w: Math.min(video.videoWidth  - x, fr.width  / scale),
-      h: Math.min(video.videoHeight - y, fr.height / scale),
-    };
-  }
-
-  async function capture() {
-    if (!stream || video.readyState < 2) return;
-
-    // Only what's inside the frame goes to the recognizer, so shelves and
-    // neighbouring items don't confuse it
-    const crop = frameCrop();
-    canvas.width  = Math.round(crop.w);
-    canvas.height = Math.round(crop.h);
-    canvas.getContext('2d').drawImage(video, crop.x, crop.y, crop.w, crop.h, 0, 0, canvas.width, canvas.height);
-
-    // Freeze the preview on the full captured frame
-    const full = document.createElement('canvas');
-    full.width  = video.videoWidth;
-    full.height = video.videoHeight;
-    full.getContext('2d').drawImage(video, 0, 0);
-    still.src = full.toDataURL('image/jpeg', 0.85);
-    still.classList.add('active');
-    video.classList.remove('active');
-    captured = true;
-    const id = ++captureId;
-    captureBtn.setAttribute('aria-label', 'Retake photo');
-
-    info.hidden = false;
-    updateAddButton();
-
-    if (!RECOGNITION_ENABLED) {
-      // Suggest names already in the fridge while typing
-      const names = getItems().map(item => item.name).sort();
-      options.innerHTML = names.map(name => `<option value="${escapeHTML(name)}"></option>`).join('');
-      setStatus('');
-      nameInput.focus();
-      return;
-    }
-
-    setStatus(modelReady ? 'Identifying…' : 'Waiting for food recognition to download…');
-
-    try {
-      const result = await recognize(canvas);
-      if (id !== captureId) return; // photo was retaken meanwhile
-      embedding = result.embedding;
-
-      const labels = result.guesses.map(g => g.label);
-      // Pre-fill the best guess unless the user already started typing
-      if (nameInput.value.trim() === '') nameInput.value = labels[0];
-      renderGuesses(labels);
-      setStatus('Wrong? Tap another guess or type the name');
-
-      const known = await getKnownLabels();
-      options.innerHTML = known.map(label => `<option value="${escapeHTML(label)}"></option>`).join('');
-    } catch {
-      if (id !== captureId) return;
-      setStatus('Couldn’t identify it — type the name');
-    }
-    updateAddButton();
-  }
-
-  captureBtn.addEventListener('click', () => {
-    if (captured) {
-      showLive();
-      setStatus('');
-    } else {
-      capture();
-    }
-  });
-
-  // --- editing the name ---
 
   // Select the whole name on tap so typing replaces it (iOS needs the delay)
   nameInput.addEventListener('focus', () => {
-    setTimeout(() => nameInput.setSelectionRange(0, nameInput.value.length), 0);
+    if (!nameInput.readOnly) setTimeout(() => nameInput.setSelectionRange(0, nameInput.value.length), 0);
   });
-  nameInput.addEventListener('input', () => {
-    highlightGuess();
-    updateAddButton();
-  });
+  nameInput.addEventListener('input', highlightGuess);
   nameInput.addEventListener('keydown', e => {
     if (e.key === 'Enter') nameInput.blur();
   });
 
-  // --- add to fridge ---
+  // --- shutter: add to fridge ---
 
-  addBtn.addEventListener('click', () => {
-    const name = nameInput.value.trim().toLowerCase();
-    if (!captured) {
-      setStatus('Take a photo first');
-      return;
-    }
+  function flash() {
+    const el = document.createElement('div');
+    el.className = 'capture-flash';
+    previewArea.appendChild(el);
+    setTimeout(() => el.remove(), 400);
+  }
+
+  function updateUndoButton() {
+    undoBtn.classList.toggle('is-waiting', history.length === 0);
+  }
+
+  updateUndoButton();
+
+  captureBtn.addEventListener('click', () => {
+    const name = (mode === 'paused' ? nameInput.value : detection?.label ?? '').trim().toLowerCase();
+
+    // Nothing named yet: pause so the user can type it
     if (!name) {
-      setStatus('Type what it is first');
+      if (mode === 'live') pause();
       nameInput.focus();
+      setStatus('Type what it is, then tap the shutter');
       return;
     }
+
     const quantity = stepper.get();
     addItem(name, quantity);
-    // Remember this photo as an example of this food for next time
-    if (embedding) learn(name, embedding);
-    const saved = `Added ${quantity} × ${name}`;
-    showLive();
-    setStatus(saved);
-    updateFridgeIcon({ animate: true });
+
+    // Learn from items the user reviewed (paused), where corrections happen.
+    // Quick live adds aren't learned, so a wrong guess can't teach itself.
+    const learned = mode === 'paused' && detection?.embedding != null;
+    if (learned) learn(name, detection.embedding);
+
+    history.push({ name, quantity, learned });
+    updateUndoButton();
+    flash();
+    resume();
+    setStatus(`Added ${quantity} × ${name}`);
+    fillSuggestions();
   });
 
-  // --- open fridge ---
+  // --- undo ---
 
-  fridgeBtn.addEventListener('click', () => {
+  undoBtn.addEventListener('click', () => {
+    const last = history.pop();
+    if (!last) {
+      setStatus('Nothing to undo');
+      return;
+    }
+    removeQuantity(last.name, last.quantity);
+    if (last.learned) unlearnLast(last.name);
+    updateUndoButton();
+    setStatus(`Removed ${last.quantity} × ${last.name}`);
+  });
+
+  // --- continue: leave the camera ---
+
+  continueBtn.addEventListener('click', () => {
+    active = false;
     if (stream) {
       stream.getTracks().forEach(t => t.stop());
       stream = null;
     }
-    onOpenFridge();
+    onContinue();
   });
 }

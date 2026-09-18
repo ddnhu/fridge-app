@@ -29,3 +29,15 @@ export function learn(label, embedding) {
 export function relabel(oldLabel, newLabel) {
   save(getLearned().map(e => (e.label === oldLabel ? { ...e, label: newLabel } : e)));
 }
+
+// Undo the most recent learn() for this label
+export function unlearnLast(label) {
+  const learned = getLearned();
+  for (let i = learned.length - 1; i >= 0; i--) {
+    if (learned[i].label === label) {
+      learned.splice(i, 1);
+      break;
+    }
+  }
+  save(learned);
+}

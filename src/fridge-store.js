@@ -50,3 +50,10 @@ export function renameItem(name, newName) {
 export function removeItem(name) {
   save(getItems().filter(item => item.name !== name));
 }
+
+// Takes some away (for undo); removes the item if none are left
+export function removeQuantity(name, quantity) {
+  save(getItems()
+    .map(item => (item.name === name ? { ...item, quantity: item.quantity - quantity } : item))
+    .filter(item => item.quantity > 0));
+}
