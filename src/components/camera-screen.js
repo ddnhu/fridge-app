@@ -1,4 +1,4 @@
-export function renderCameraScreen(container, { onNavigateToGallery }) {
+export function renderCameraScreen(container) {
   container.innerHTML = `
     <video class="camera-bg" autoplay playsinline muted></video>
     <section class="camera-screen" aria-label="Camera capture">
@@ -29,7 +29,10 @@ export function renderCameraScreen(container, { onNavigateToGallery }) {
         </div>
       </div>
       <div class="controls">
-        <button class="btn-library" type="button" aria-label="Open fridge">
+        <!-- Fridge icon is a placeholder for the future fridge/inventory view.
+             It is not tappable in the MVP. The old gallery screen lives in git
+             history (src/components/gallery-screen.js, removed after 0e91e8e). -->
+        <button class="btn-library" type="button" disabled aria-label="Fridge (coming soon)">
           <img class="fridge-icon" src="src/components/icons/fridge-empty.svg" width="70" height="70" alt="" aria-hidden="true" />
         </button>
         <button class="btn-capture" type="button" aria-label="Capture photo"></button>
@@ -42,7 +45,6 @@ export function renderCameraScreen(container, { onNavigateToGallery }) {
 
   const bgVideo          = container.querySelector('.camera-bg');
   const video            = container.querySelector('.camera-video');
-  const fridgeBtn        = container.querySelector('.btn-library');
   const message          = container.querySelector('.preview-message');
   const qtyValue         = container.querySelector('.qty-value');
   const qtyUp            = container.querySelector('.qty-up');
@@ -88,15 +90,5 @@ export function renderCameraScreen(container, { onNavigateToGallery }) {
       quantity -= 1;
       qtyValue.textContent = quantity;
     }
-  });
-
-  // --- navigate to gallery ---
-
-  fridgeBtn.addEventListener('click', () => {
-    if (stream) {
-      stream.getTracks().forEach(t => t.stop());
-      stream = null;
-    }
-    onNavigateToGallery();
   });
 }
