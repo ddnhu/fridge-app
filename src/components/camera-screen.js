@@ -1,5 +1,8 @@
-import { loadRecognizer, recognize } from '../recognizer.js';
+import { loadRecognizer, recognize, getKnownLabels } from '../recognizer.js';
+import { learn } from '../learned-examples.js';
 import { getItems, addItem } from '../fridge-store.js';
+import { quantityStepperHTML, bindQuantityStepper } from './quantity-stepper.js';
+import { escapeHTML } from '../escape-html.js';
 
 // Fridge icon fills up as items are saved. Thresholds are easy to tweak here.
 const FRIDGE_STATES = [
@@ -9,7 +12,7 @@ const FRIDGE_STATES = [
   { max: Infinity, file: 'fridge-full.svg'   },
 ];
 
-export function renderCameraScreen(container) {
+export function renderCameraScreen(container, { onOpenFridge }) {
   container.innerHTML = `
     <video class="camera-bg" autoplay playsinline muted></video>
     <section class="camera-screen" aria-label="Camera capture">
@@ -23,32 +26,23 @@ export function renderCameraScreen(container) {
         <div class="detection-overlay">
           <div class="detection-frame"></div>
           <div class="detection-info" hidden>
-            <input class="detection-label" type="text" list="food-options" enterkeyhint="done"
-                   autocomplete="off" autocapitalize="none" spellcheck="false"
-                   placeholder="What is it?" aria-label="Food name" />
+            <label class="detection-name">
+              <input class="detection-label" type="text" list="food-options" enterkeyhint="done"
+                     autocomplete="off" autocapitalize="none" spellcheck="false"
+                     placeholder="Type what it is" aria-label="Food name" />
+              <svg class="detection-edit" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M10.5 3.5L12.5 5.5M3 13L3.5 10.5L11 3L13 5L5.5 12.5L3 13Z" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </label>
             <datalist id="food-options"></datalist>
-            <div class="detection-quantity">
-              <button class="qty-btn qty-down" type="button" aria-label="Decrease quantity">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M3 6L8 11L13 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-              <span class="qty-value">1</span>
-              <button class="qty-btn qty-up" type="button" aria-label="Increase quantity">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                  <path d="M3 10L8 5L13 10" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-            </div>
+            <div class="detection-guesses" role="group" aria-label="Other guesses"></div>
+            ${quantityStepperHTML(1)}
           </div>
           <p class="detection-status" role="status"></p>
         </div>
       </div>
       <div class="controls">
-        <!-- Fridge icon is a placeholder for the future fridge/inventory view.
-             It is not tappable in the MVP. The old gallery screen lives in git
-             history (src/components/gallery-screen.js, removed after 0e91e8e). -->
-        <button class="btn-library" type="button" disabled aria-label="Fridge (coming soon)">
+        <button class="btn-library" type="button" aria-label="Open fridge">
           <img class="fridge-icon" src="src/components/icons/fridge-empty.svg" width="70" height="70" alt="" aria-hidden="true" />
         </button>
         <button class="btn-capture" type="button" aria-label="Capture photo"></button>
@@ -69,18 +63,18 @@ export function renderCameraScreen(container) {
   const info       = container.querySelector('.detection-info');
   const nameInput  = container.querySelector('.detection-label');
   const options    = container.querySelector('#food-options');
-  const qtyValue   = container.querySelector('.qty-value');
-  const qtyUp      = container.querySelector('.qty-up');
-  const qtyDown    = container.querySelector('.qty-down');
+  const guessList  = container.querySelector('.detection-guesses');
+  const frame      = container.querySelector('.detection-frame');
   const captureBtn = container.querySelector('.btn-capture');
   const addBtn     = container.querySelector('.btn-retake');
   const fridgeIcon = container.querySelector('.fridge-icon');
+  const fridgeBtn  = container.querySelector('.btn-library');
 
   let stream    = null;
-  let quantity  = 1;
   let captured  = false;
   let captureId = 0; // ignores recognition results from a photo that was retaken
   let modelReady = false;
+  let embedding  = null; // fingerprint of the current photo, learned on save
 
   // --- camera start ---
 
@@ -143,17 +137,9 @@ export function renderCameraScreen(container) {
 
   updateFridgeIcon();
 
-  // --- quantity controls ---
+  // --- quantity ---
 
-  function setQuantity(n) {
-    quantity = n;
-    qtyValue.textContent = quantity;
-  }
-
-  qtyUp.addEventListener('click', () => setQuantity(quantity + 1));
-  qtyDown.addEventListener('click', () => {
-    if (quantity > 1) setQuantity(quantity - 1);
-  });
+  const stepper = bindQuantityStepper(info);
 
   // --- capture / retake ---
 
@@ -161,29 +147,77 @@ export function renderCameraScreen(container) {
     addBtn.disabled = !captured || nameInput.value.trim() === '';
   }
 
+  // Guess chips: tapping one sets the name; the current name is highlighted
+  function renderGuesses(labels) {
+    guessList.innerHTML = labels
+      .map(label => `<button class="guess-chip" type="button">${escapeHTML(label)}</button>`)
+      .join('');
+    highlightGuess();
+  }
+
+  function highlightGuess() {
+    const name = nameInput.value.trim().toLowerCase();
+    guessList.querySelectorAll('.guess-chip').forEach(chip => {
+      chip.setAttribute('aria-pressed', String(chip.textContent === name));
+    });
+  }
+
+  guessList.addEventListener('click', e => {
+    const chip = e.target.closest('.guess-chip');
+    if (!chip) return;
+    nameInput.value = chip.textContent;
+    highlightGuess();
+    updateAddButton();
+  });
+
   function showLive() {
     captured = false;
     captureId += 1;
+    embedding = null;
     still.classList.remove('active');
     still.removeAttribute('src');
     if (stream) video.classList.add('active');
     info.hidden = true;
     nameInput.value = '';
-    options.innerHTML = '';
-    setQuantity(1);
+    guessList.innerHTML = '';
+    stepper.set(1);
     captureBtn.setAttribute('aria-label', 'Capture photo');
     updateAddButton();
+  }
+
+  // The part of the camera image inside the corner frame, in video pixels.
+  // The preview uses object-fit: cover, so undo that scaling and offset.
+  function frameCrop() {
+    const vr = video.getBoundingClientRect();
+    const fr = frame.getBoundingClientRect();
+    const scale = Math.max(vr.width / video.videoWidth, vr.height / video.videoHeight);
+    const offsetX = (vr.width  - video.videoWidth  * scale) / 2;
+    const offsetY = (vr.height - video.videoHeight * scale) / 2;
+    const x = Math.max(0, (fr.left - vr.left - offsetX) / scale);
+    const y = Math.max(0, (fr.top  - vr.top  - offsetY) / scale);
+    return {
+      x, y,
+      w: Math.min(video.videoWidth  - x, fr.width  / scale),
+      h: Math.min(video.videoHeight - y, fr.height / scale),
+    };
   }
 
   async function capture() {
     if (!stream || video.readyState < 2) return;
 
-    canvas.width  = video.videoWidth;
-    canvas.height = video.videoHeight;
-    canvas.getContext('2d').drawImage(video, 0, 0);
+    // Only what's inside the frame goes to the recognizer, so shelves and
+    // neighbouring items don't confuse it
+    const crop = frameCrop();
+    canvas.width  = Math.round(crop.w);
+    canvas.height = Math.round(crop.h);
+    canvas.getContext('2d').drawImage(video, crop.x, crop.y, crop.w, crop.h, 0, 0, canvas.width, canvas.height);
 
-    // Freeze the preview on the captured frame
-    still.src = canvas.toDataURL('image/jpeg', 0.85);
+    // Freeze the preview on the full captured frame
+    const full = document.createElement('canvas');
+    full.width  = video.videoWidth;
+    full.height = video.videoHeight;
+    full.getContext('2d').drawImage(video, 0, 0);
+    still.src = full.toDataURL('image/jpeg', 0.85);
     still.classList.add('active');
     video.classList.remove('active');
     captured = true;
@@ -195,17 +229,18 @@ export function renderCameraScreen(container) {
     setStatus(modelReady ? 'Identifying…' : 'Waiting for food recognition to download…');
 
     try {
-      const guesses = await recognize(canvas);
+      const result = await recognize(canvas);
       if (id !== captureId) return; // photo was retaken meanwhile
+      embedding = result.embedding;
 
+      const labels = result.guesses.map(g => g.label);
       // Pre-fill the best guess unless the user already started typing
-      if (nameInput.value.trim() === '') nameInput.value = guesses[0].label;
-      options.innerHTML = guesses
-        .map(g => `<option value="${g.label}"></option>`)
-        .join('');
-      setStatus(guesses.slice(1).length
-        ? `Or maybe: ${guesses.slice(1).map(g => g.label).join(', ')}`
-        : '');
+      if (nameInput.value.trim() === '') nameInput.value = labels[0];
+      renderGuesses(labels);
+      setStatus('Wrong? Tap another guess or type the name');
+
+      const known = await getKnownLabels();
+      options.innerHTML = known.map(label => `<option value="${escapeHTML(label)}"></option>`).join('');
     } catch {
       if (id !== captureId) return;
       setStatus('Couldn’t identify it — type the name');
@@ -222,20 +257,42 @@ export function renderCameraScreen(container) {
     }
   });
 
-  // --- add to fridge ---
+  // --- editing the name ---
 
-  nameInput.addEventListener('input', updateAddButton);
+  // Select the whole name on tap so typing replaces it (iOS needs the delay)
+  nameInput.addEventListener('focus', () => {
+    setTimeout(() => nameInput.setSelectionRange(0, nameInput.value.length), 0);
+  });
+  nameInput.addEventListener('input', () => {
+    highlightGuess();
+    updateAddButton();
+  });
   nameInput.addEventListener('keydown', e => {
     if (e.key === 'Enter') nameInput.blur();
   });
 
+  // --- add to fridge ---
+
   addBtn.addEventListener('click', () => {
     const name = nameInput.value.trim().toLowerCase();
     if (!captured || !name) return;
+    const quantity = stepper.get();
     addItem(name, quantity);
+    // Remember this photo as an example of this food for next time
+    if (embedding) learn(name, embedding);
     const saved = `Added ${quantity} × ${name}`;
     showLive();
     setStatus(saved);
     updateFridgeIcon({ animate: true });
+  });
+
+  // --- open fridge ---
+
+  fridgeBtn.addEventListener('click', () => {
+    if (stream) {
+      stream.getTracks().forEach(t => t.stop());
+      stream = null;
+    }
+    onOpenFridge();
   });
 }

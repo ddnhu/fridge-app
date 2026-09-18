@@ -214,8 +214,7 @@ body {
 }
 
 
-.btn-retake:disabled,
-.btn-library:disabled {
+.btn-retake:disabled {
   cursor: default;
 }
 
@@ -257,7 +256,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-1);
+  gap: var(--space-2);
   pointer-events: auto;
 }
 
@@ -265,27 +264,73 @@ body {
   display: none;
 }
 
+.detection-name {
+  position: relative;
+  display: block;
+}
+
 .detection-label {
-  width: 200px;
+  width: 216px;
   color: #ffffff;
   /* 16px stops iOS Safari zooming in when the field is focused */
   font-size: 16px;
   font-weight: 600;
   font-family: inherit;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  border: none;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   outline: none;
-  padding: var(--space-1) var(--space-3);
+  padding: var(--space-2) var(--space-5);
   border-radius: var(--radius-full);
 }
 
 .detection-label::placeholder {
   color: rgba(255, 255, 255, 0.6);
+  font-weight: 400;
 }
 
 .detection-label:focus {
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6);
+  border-color: #ffffff;
+}
+
+/* Pencil icon: signals the name can be edited */
+.detection-edit {
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.detection-guesses {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  max-width: 280px;
+}
+
+.detection-guesses:empty {
+  display: none;
+}
+
+.guess-chip {
+  color: #ffffff;
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-full);
+  padding: var(--space-1) var(--space-3);
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.guess-chip[aria-pressed="true"] {
+  color: #000000;
+  background-color: #ffffff;
+  border-color: #ffffff;
 }
 
 /* Model download progress, "Identifying…", alternative guesses, save confirmation */
@@ -303,7 +348,7 @@ body {
   visibility: hidden;
 }
 
-.detection-quantity {
+.qty-stepper {
   display: flex;
   align-items: center;
   gap: var(--space-1);
@@ -337,4 +382,112 @@ body {
   font-weight: 600;
   min-width: 20px;
   text-align: center;
+}
+
+/* Fridge screen */
+
+.fridge-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  padding: var(--space-3);
+  padding-top: calc(var(--space-3) + env(safe-area-inset-top, 0px));
+  gap: var(--space-3);
+  background-color: var(--color-bg);
+}
+
+.fridge-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.fridge-title {
+  margin: 0;
+  font-size: var(--font-size-heading);
+  font-weight: 600;
+}
+
+.btn-back {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: var(--font-size-body);
+  cursor: pointer;
+  padding: var(--space-1) 0;
+}
+
+.fridge-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.fridge-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  background-color: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.fridge-item-name {
+  flex: 1;
+  min-width: 0;
+}
+
+.fridge-item-name input {
+  width: 100%;
+  color: var(--color-text);
+  /* 16px stops iOS Safari zooming in when the field is focused */
+  font-size: 16px;
+  font-family: inherit;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  outline: none;
+  padding: var(--space-2);
+}
+
+.fridge-item-name input:focus {
+  border-color: var(--color-text-muted);
+  background-color: var(--color-surface-raised);
+}
+
+.btn-remove {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: var(--radius-full);
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.btn-remove:active {
+  background-color: var(--color-surface-raised);
+}
+
+.fridge-empty {
+  margin: auto 0;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.fridge-empty[hidden] {
+  display: none;
 }
