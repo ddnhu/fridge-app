@@ -50,7 +50,7 @@ export function renderCameraScreen(container, { onOpenFridge }) {
           <img class="fridge-icon" src="src/components/icons/fridge-empty.svg" width="70" height="70" alt="" aria-hidden="true" />
         </button>
         <button class="btn-capture" type="button" aria-label="Capture photo"></button>
-        <button class="btn-retake" type="button" disabled aria-label="Add to fridge">
+        <button class="btn-retake" type="button" aria-label="Add to fridge">
           <img src="src/components/icons/arrow-forward.svg" width="50" height="50" alt="" aria-hidden="true" />
         </button>
       </div>
@@ -149,9 +149,13 @@ export function renderCameraScreen(container, { onOpenFridge }) {
 
   // --- capture / retake ---
 
+  // The button always responds (see click handler); this only dims it until
+  // there's a photo and a name, so it's clear it isn't ready yet
   function updateAddButton() {
-    addBtn.disabled = !captured || nameInput.value.trim() === '';
+    addBtn.classList.toggle('is-waiting', !captured || nameInput.value.trim() === '');
   }
+
+  updateAddButton();
 
   // Guess chips: tapping one sets the name; the current name is highlighted
   function renderGuesses(labels) {
@@ -291,7 +295,15 @@ export function renderCameraScreen(container, { onOpenFridge }) {
 
   addBtn.addEventListener('click', () => {
     const name = nameInput.value.trim().toLowerCase();
-    if (!captured || !name) return;
+    if (!captured) {
+      setStatus('Take a photo first');
+      return;
+    }
+    if (!name) {
+      setStatus('Type what it is first');
+      nameInput.focus();
+      return;
+    }
     const quantity = stepper.get();
     addItem(name, quantity);
     // Remember this photo as an example of this food for next time

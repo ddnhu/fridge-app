@@ -214,8 +214,8 @@ body {
 }
 
 
-.btn-retake:disabled {
-  cursor: default;
+.btn-retake.is-waiting {
+  opacity: 0.4;
 }
 
 /* Detection overlay */
