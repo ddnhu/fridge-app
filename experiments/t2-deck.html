@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../vendor/dialkit/styles.css" />
 <style>
   /* ---- T2 palette ---- */
   :root {
@@ -36,7 +37,7 @@
     justify-content: center;
   }
 
-  .table { perspective: 1400px; }
+  .table { perspective: var(--persp, 1400px); }
 
   .card {
     position: relative;
@@ -113,18 +114,26 @@
      The .play class is added on tap. Card starts face-DOWN.
      ===================================================================== */
 
+  /* --- driven by the DialKit panel --- */
+  :root {
+    --turn-dur:  480ms;
+    --turn-ease: cubic-bezier(.45, 0, .15, 1);
+    --overshoot: 3deg;
+    --persp:     1400px;
+  }
+
   /* resting: face down. The back is unrotated, the front sits at 180deg,
      so rotateY(0) shows you the back and rotateY(180) shows the face. */
   .card { transform: rotateY(0deg); }
 
   .play .card {
-    animation: turn 480ms cubic-bezier(.45,0,.15,1) forwards;
+    animation: turn var(--turn-dur) var(--turn-ease) forwards;
   }
 
-  /* 420ms of turn, then a 60ms settle back from a 3deg overshoot */
+  /* turn, then a short settle back from the overshoot */
   @keyframes turn {
     0%   { transform: rotateY(0deg); }
-    88%  { transform: rotateY(183deg); }
+    88%  { transform: rotateY(calc(180deg + var(--overshoot))); }
     100% { transform: rotateY(180deg); }
   }
 
@@ -174,6 +183,7 @@
   </aside>
   <p class="hint">tap to replay</p>
 
+<script src="../vendor/dialkit/browser.global.js"></script>
 <script>
   const stage = document.getElementById('stage');
   function play() {
@@ -208,8 +218,36 @@
       b.hidden = !b.hidden;
     }
   });
-  document.body.addEventListener('pointerdown', tap);
+  document.body.addEventListener('pointerdown', e => {
+    if (e.target.closest('#dials')) return;
+    tap();
+  });
   play();
+
+  // ---- live controls -------------------------------------------------
+  const root = document.documentElement;
+  const host = document.createElement('div');
+  host.id = 'dials';
+  document.body.appendChild(host);
+  DialKit.createDialRoot({ target: host, position: 'top-right', defaultOpen: true });
+
+  const kit = DialKit.createDialKit('T2 — the turn', {
+    'turn':        { type: 'easing', duration: 480, ease: [.45, 0, .15, 1] },
+    'overshoot':   [3, 0, 14],
+    'perspective': [1400, 400, 2600, 50],
+  }, {
+    id: 't2-turn',
+    persist: true,
+    shortcuts: { 'overshoot': { key: 'o' }, 'perspective': { key: 'p' } },
+  });
+
+  kit.subscribe(v => {
+    root.style.setProperty('--turn-dur',  v['turn'].duration + 'ms');
+    root.style.setProperty('--turn-ease', `cubic-bezier(${v['turn'].ease.join(', ')})`);
+    root.style.setProperty('--overshoot', v['overshoot'] + 'deg');
+    root.style.setProperty('--persp',     v['perspective'] + 'px');
+    play();
+  });
 </script>
 </body>
 </html>

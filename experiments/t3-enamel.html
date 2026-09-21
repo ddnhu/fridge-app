@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Narrow:wght@500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../vendor/dialkit/styles.css" />
 <style>
   /* ---- T3 palette ---- */
   :root {
@@ -90,21 +91,31 @@
      The .play class is added on tap.
      ===================================================================== */
 
-  /* --- starting states --- */
-  /* the keyline drops in and lands hard, with a slight overshoot */
-  .headline .key {
-    opacity: 0;
-    transform: translateY(-18px);
-    transition: opacity 90ms linear,
-                transform 180ms cubic-bezier(.34,1.73,.64,1);
+  /* --- every value here is driven by the DialKit panel --- */
+  :root {
+    --drop:      18px;
+    --land-dur:  180ms;
+    --land-ease: cubic-bezier(.34, 1.73, .64, 1);
+    --lag:       60ms;
+    --off:       1.5px;
+    --shake:     2px;
   }
 
-  /* the cream plate arrives LATE and lands 1.5px off. It never corrects. */
+  /* the keyline drops in and lands hard, with an overshoot */
+  .headline .key {
+    opacity: 0;
+    transform: translateY(calc(var(--drop) * -1));
+    transition: opacity 90ms linear,
+                transform var(--land-dur) var(--land-ease);
+  }
+
+  /* the cream plate arrives LATE and lands off-register. It never corrects. */
   .headline .plate {
     opacity: 0;
-    transform: translate(1.5px, -1.5px) translateY(-18px);
-    transition: opacity 90ms linear 60ms,
-                transform 180ms cubic-bezier(.34,1.73,.64,1) 60ms;
+    transform: translate(var(--off), calc(var(--off) * -1))
+               translateY(calc(var(--drop) * -1));
+    transition: opacity 90ms linear var(--lag),
+                transform var(--land-dur) var(--land-ease) var(--lag);
   }
 
   .sub {
@@ -116,22 +127,21 @@
   .play .key {
     opacity: 1;
     transform: translateY(0);
-    animation: shake 40ms linear 180ms 1;
+    animation: shake 40ms linear var(--land-dur) 1;
   }
 
   .play .plate {
     opacity: 1;
     /* the misregistration survives. This is the signature, not a bug. */
-    transform: translate(1.5px, -1.5px);
-    animation: shake 40ms linear 240ms 1;
+    transform: translate(var(--off), calc(var(--off) * -1));
+    animation: shake 40ms linear calc(var(--land-dur) + var(--lag)) 1;
   }
 
   .play .sub { opacity: 1; }
 
-  /* the 2px thump on landing */
   @keyframes shake {
     0%   { margin-left: 0; }
-    50%  { margin-left: 2px; }
+    50%  { margin-left: var(--shake); }
     100% { margin-left: 0; }
   }
 
@@ -175,6 +185,7 @@
   </aside>
   <p class="hint">tap to replay</p>
 
+<script src="../vendor/dialkit/browser.global.js"></script>
 <script>
   const stage = document.getElementById('stage');
   function play() {
@@ -209,8 +220,40 @@
       b.hidden = !b.hidden;
     }
   });
-  document.body.addEventListener('pointerdown', tap);
+  document.body.addEventListener('pointerdown', e => {
+    if (e.target.closest('#dials')) return;
+    tap();
+  });
   play();
+
+  // ---- live controls -------------------------------------------------
+  const root = document.documentElement;
+  const host = document.createElement('div');
+  host.id = 'dials';
+  document.body.appendChild(host);
+  DialKit.createDialRoot({ target: host, position: 'top-right', defaultOpen: true });
+
+  const kit = DialKit.createDialKit('T3 — the reveal', {
+    'landing':    { type: 'easing', duration: 180, ease: [.34, 1.73, .64, 1] },
+    'off register': [1.5, 0, 6, 0.5],
+    'plate lag':    [60, 0, 240],
+    'drop':         [18, 0, 60],
+    'shake':        [2, 0, 8],
+  }, {
+    id: 't3-reveal',
+    persist: true,
+    shortcuts: { 'off register': { key: 'o' }, 'plate lag': { key: 'l' } },
+  });
+
+  kit.subscribe(v => {
+    root.style.setProperty('--land-dur',  v['landing'].duration + 'ms');
+    root.style.setProperty('--land-ease', `cubic-bezier(${v['landing'].ease.join(', ')})`);
+    root.style.setProperty('--off',       v['off register'] + 'px');
+    root.style.setProperty('--lag',       v['plate lag'] + 'ms');
+    root.style.setProperty('--drop',      v['drop'] + 'px');
+    root.style.setProperty('--shake',     v['shake'] + 'px');
+    play();
+  });
 </script>
 </body>
 </html>
