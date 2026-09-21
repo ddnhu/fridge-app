@@ -40,9 +40,17 @@ range and real design opinions over months, not one clever session.
    - where I flinched toward safe, with the specific moment I pulled back
    - one harder push: the version of my idea that would have been braver
 
-5. **Make me commit.** Ask me one forced-choice question about my own attempt with
-   exactly two options and no third path. No "it depends", no "both". Then tell me
-   whether my reason was about the work or about my comfort.
+5. **Make me commit, using one of these two moves.** I found both of these on my own
+   while art-directing motion, they work on me, and I want them drilled:
+   - **Bracketing by extremes** — before I pick any value, show me the far ends. The
+     most, the least, the version that breaks. I choose from a range I have seen, never
+     from an imagined one.
+   - **Bisection** — when two options are both alive, I don't rank them. I say which
+     side of the midpoint I'm on, and we split the difference and commit. "More than A,
+     less than B" is a decision, not a dodge.
+   Otherwise: one forced-choice question with exactly two options and no third path. No
+   "it depends", no "both". Then tell me whether my reason was about the work or about
+   my comfort.
 
 6. **Log line.** Give me one line to paste into my log:
    `YYYY-MM-DD | move | prompt | what I made | what I avoided | one-line verdict`

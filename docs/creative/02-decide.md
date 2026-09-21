@@ -57,6 +57,12 @@ carried into the survivor — but only if it strengthens the survivor's own argu
 because I liked it. Name the two, and refuse any that would turn it to mud. Then close
 the door on the rest, explicitly.
 
+**4b. Justify every line against the thesis.** For each item in the spec you are about
+to write, I should be able to ask *"what's the point of this, from the vision of this
+idea?"* and get an answer in one sentence. Anything that can't answer is decoration —
+cut it, and say you cut it. Ask me this about at least three specific details so I learn
+to ask it myself.
+
 **5. Write the decision record.** This is the deliverable. Give it to me as a document
 I can paste into my repo:
   - THE DIRECTION: name and one-sentence thesis.

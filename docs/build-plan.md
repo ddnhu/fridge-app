@@ -50,6 +50,14 @@ These matter more than the schedule. You already know you go deep on details.
 - **The 20-minute rule.** Stuck on the same problem for 20 minutes with no progress?
   Ship the ugly version and park the elegant one. Ugly and working beats elegant and
   Thursday.
+- **Build on the laptop, judge on the phone.** Iterate at `localhost:8123`, where a
+  refresh is instant. Push once per milestone, not per change — GitHub Pages caches for
+  ~10 minutes, so pushing to check a tweak costs 2-3 minutes and a private tab every
+  time. The phone is for deciding how something feels, not for finding out whether it
+  works.
+- **Direct in feeling-words, don't type CSS.** "Softer", "snappier", "more fluid",
+  "between those two" is faster than learning easing syntax mid-decision, and it keeps
+  you in judgment instead of debugging. Ask for the extremes before choosing a value.
 - **No polish before Wednesday.** No colour, no type, no easing curves until the whole
   loop runs end to end. Styling an unfinished flow is the most seductive way to lose
   this week.
