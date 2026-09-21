@@ -31,3 +31,29 @@
   --font-size-heading: 20px;
   --line-height-body: 1.5;
 }
+
+/* ---------------------------------------------------------------------------
+   Red Stamp — the decided direction (docs/creative/decision-record.md)
+
+   Four colours. Red is reserved for the act of deciding: the button you hand
+   the decision over with, and the stamp that closes it. Red anywhere else
+   means something has slipped.
+   --------------------------------------------------------------------------- */
+:root {
+  --cream: #F5F1E6;  /* the page */
+  --ink:   #141210;  /* all type. Warm black, never neutral */
+  --red:   #E4290F;  /* the button, and the stamp. Nowhere else */
+  --faint: #8A8275;  /* the diary label, "also considered" */
+
+  /* drift: eases FROM REST, long tail. Consideration. */
+  --drift: cubic-bezier(.33, 0, .2, 1);
+  --drift-dur: 760ms;
+  --drift-gap: 70ms;
+
+  /* snap: full speed at frame one, stops dead. Closure. */
+  --snap: cubic-bezier(.2, .9, .25, 1);
+  --snap-dur: 180ms;
+
+  --font-display: 'Archivo', system-ui, sans-serif;
+  --font-label: 'EB Garamond', Georgia, serif;
+}

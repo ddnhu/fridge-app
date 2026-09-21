@@ -1,0 +1,672 @@
+[
+  {
+    "id": "r00",
+    "name": "Bolognese",
+    "requires": [
+      "beef mince",
+      "tomato",
+      "onion"
+    ],
+    "optional": [
+      "carrot",
+      "celery",
+      "garlic",
+      "cheese"
+    ],
+    "method": "Brown the mince, add the rest, let it go low for as long as you can stand."
+  },
+  {
+    "id": "r01",
+    "name": "Fried rice",
+    "requires": [
+      "eggs",
+      "spring onion"
+    ],
+    "optional": [
+      "ham",
+      "peas",
+      "carrot",
+      "corn",
+      "soy sauce",
+      "bacon"
+    ],
+    "method": "Cold rice, hot pan, egg last."
+  },
+  {
+    "id": "r02",
+    "name": "Tomato and egg",
+    "requires": [
+      "eggs",
+      "tomato"
+    ],
+    "optional": [
+      "spring onion",
+      "soy sauce"
+    ],
+    "method": "Scramble, set aside, cook the tomato down, put them back together."
+  },
+  {
+    "id": "r03",
+    "name": "Carbonara",
+    "requires": [
+      "eggs",
+      "bacon",
+      "cheese"
+    ],
+    "optional": [
+      "garlic"
+    ],
+    "method": "Pasta water into the egg and cheese off the heat, or it scrambles."
+  },
+  {
+    "id": "r04",
+    "name": "Omelette",
+    "requires": [
+      "eggs"
+    ],
+    "optional": [
+      "cheese",
+      "mushroom",
+      "spinach",
+      "ham",
+      "spring onion"
+    ],
+    "method": "Low heat, pull the edges in, fold before it looks done."
+  },
+  {
+    "id": "r05",
+    "name": "Shakshuka",
+    "requires": [
+      "eggs",
+      "tomato",
+      "onion"
+    ],
+    "optional": [
+      "capsicum",
+      "garlic",
+      "spinach"
+    ],
+    "method": "Simmer the sauce, make wells, crack the eggs in, lid on."
+  },
+  {
+    "id": "r06",
+    "name": "Frittata",
+    "requires": [
+      "eggs",
+      "potato",
+      "onion"
+    ],
+    "optional": [
+      "cheese",
+      "spinach",
+      "bacon"
+    ],
+    "method": "Start it on the stove, finish it under the grill."
+  },
+  {
+    "id": "r07",
+    "name": "Mushroom risotto",
+    "requires": [
+      "mushroom",
+      "onion",
+      "butter"
+    ],
+    "optional": [
+      "garlic",
+      "cheese",
+      "cream"
+    ],
+    "method": "Stir more than you think, add liquid slowly."
+  },
+  {
+    "id": "r08",
+    "name": "Chicken stir-fry",
+    "requires": [
+      "chicken",
+      "spring onion"
+    ],
+    "optional": [
+      "capsicum",
+      "broccoli",
+      "garlic",
+      "soy sauce",
+      "carrot"
+    ],
+    "method": "Pan hotter than feels sensible, everything moving."
+  },
+  {
+    "id": "r09",
+    "name": "Beef and broccoli",
+    "requires": [
+      "steak",
+      "broccoli",
+      "garlic"
+    ],
+    "optional": [
+      "soy sauce",
+      "spring onion"
+    ],
+    "method": "Sear the beef first, take it out, put it back at the end."
+  },
+  {
+    "id": "r10",
+    "name": "Congee",
+    "requires": [
+      "spring onion"
+    ],
+    "optional": [
+      "eggs",
+      "chicken",
+      "soy sauce",
+      "leftovers in a container"
+    ],
+    "method": "Rice and a lot of water, an hour, stir when you remember."
+  },
+  {
+    "id": "r11",
+    "name": "Mapo tofu",
+    "requires": [
+      "tofu",
+      "beef mince",
+      "garlic"
+    ],
+    "optional": [
+      "spring onion",
+      "soy sauce"
+    ],
+    "method": "Gentle with the tofu \u2014 push it around, don't stir."
+  },
+  {
+    "id": "r12",
+    "name": "Tofu and greens",
+    "requires": [
+      "tofu",
+      "spinach",
+      "garlic"
+    ],
+    "optional": [
+      "soy sauce",
+      "spring onion"
+    ],
+    "method": "Crisp the tofu properly before anything green goes in."
+  },
+  {
+    "id": "r13",
+    "name": "Potato soup",
+    "requires": [
+      "potato",
+      "onion",
+      "cream"
+    ],
+    "optional": [
+      "butter",
+      "celery",
+      "garlic"
+    ],
+    "method": "Soften, simmer, blend some of it and leave the rest."
+  },
+  {
+    "id": "r14",
+    "name": "Pumpkin soup",
+    "requires": [
+      "pumpkin",
+      "onion"
+    ],
+    "optional": [
+      "cream",
+      "garlic",
+      "butter"
+    ],
+    "method": "Roast the pumpkin first if you have the patience."
+  },
+  {
+    "id": "r15",
+    "name": "Minestrone",
+    "requires": [
+      "tomato",
+      "carrot",
+      "celery",
+      "onion"
+    ],
+    "optional": [
+      "cabbage",
+      "green beans",
+      "garlic"
+    ],
+    "method": "Everything diced small, everything in, long and slow."
+  },
+  {
+    "id": "r16",
+    "name": "Roast vegetables",
+    "requires": [
+      "potato",
+      "carrot"
+    ],
+    "optional": [
+      "pumpkin",
+      "onion",
+      "garlic",
+      "sweet potato"
+    ],
+    "method": "Hotter oven than you think, one layer, don't crowd the tray."
+  },
+  {
+    "id": "r17",
+    "name": "Cauliflower cheese",
+    "requires": [
+      "cauliflower",
+      "cheese",
+      "milk"
+    ],
+    "optional": [
+      "butter"
+    ],
+    "method": "Undercook the cauliflower \u2014 the oven finishes it."
+  },
+  {
+    "id": "r18",
+    "name": "Macaroni cheese",
+    "requires": [
+      "cheese",
+      "milk",
+      "butter"
+    ],
+    "optional": [
+      "bacon",
+      "mustard"
+    ],
+    "method": "Roux first, cheese off the heat."
+  },
+  {
+    "id": "r19",
+    "name": "Cheese toastie",
+    "requires": [
+      "bread",
+      "cheese",
+      "butter"
+    ],
+    "optional": [
+      "ham",
+      "tomato"
+    ],
+    "method": "Butter the outside, low heat, be patient."
+  },
+  {
+    "id": "r20",
+    "name": "French toast",
+    "requires": [
+      "bread",
+      "eggs",
+      "milk"
+    ],
+    "optional": [
+      "butter",
+      "jam",
+      "banana"
+    ],
+    "method": "Let the bread actually soak."
+  },
+  {
+    "id": "r21",
+    "name": "Bacon and eggs",
+    "requires": [
+      "bacon",
+      "eggs"
+    ],
+    "optional": [
+      "bread",
+      "tomato",
+      "mushroom"
+    ],
+    "method": "Bacon first, eggs in the fat."
+  },
+  {
+    "id": "r22",
+    "name": "Sausage and mash",
+    "requires": [
+      "sausages",
+      "potato",
+      "butter"
+    ],
+    "optional": [
+      "onion",
+      "milk"
+    ],
+    "method": "More butter in the mash than you'd admit to."
+  },
+  {
+    "id": "r23",
+    "name": "Chicken soup",
+    "requires": [
+      "chicken",
+      "carrot",
+      "celery"
+    ],
+    "optional": [
+      "onion",
+      "spring onion",
+      "garlic"
+    ],
+    "method": "Barely a simmer, never a boil."
+  },
+  {
+    "id": "r24",
+    "name": "Salmon and greens",
+    "requires": [
+      "salmon",
+      "asparagus"
+    ],
+    "optional": [
+      "lemon",
+      "butter",
+      "garlic"
+    ],
+    "method": "Skin side down, most of the time, don't move it."
+  },
+  {
+    "id": "r25",
+    "name": "Prawn pasta",
+    "requires": [
+      "prawns",
+      "garlic",
+      "lemon"
+    ],
+    "optional": [
+      "tomato",
+      "cream",
+      "spring onion"
+    ],
+    "method": "Prawns take three minutes. Have everything else ready."
+  },
+  {
+    "id": "r26",
+    "name": "Garlic prawns",
+    "requires": [
+      "prawns",
+      "garlic",
+      "butter"
+    ],
+    "optional": [
+      "lemon",
+      "bread"
+    ],
+    "method": "Bread is not optional, whatever the list says."
+  },
+  {
+    "id": "r27",
+    "name": "Zucchini fritters",
+    "requires": [
+      "zucchini",
+      "eggs"
+    ],
+    "optional": [
+      "cheese",
+      "spring onion",
+      "garlic"
+    ],
+    "method": "Salt the zucchini and squeeze it dry, or they'll be soggy."
+  },
+  {
+    "id": "r28",
+    "name": "Eggplant bake",
+    "requires": [
+      "eggplant",
+      "tomato",
+      "cheese"
+    ],
+    "optional": [
+      "garlic",
+      "onion"
+    ],
+    "method": "Salt the eggplant, wait, pat it dry."
+  },
+  {
+    "id": "r29",
+    "name": "Ratatouille",
+    "requires": [
+      "eggplant",
+      "zucchini",
+      "tomato"
+    ],
+    "optional": [
+      "capsicum",
+      "onion",
+      "garlic"
+    ],
+    "method": "Cook each thing separately, then together. It matters."
+  },
+  {
+    "id": "r30",
+    "name": "Stuffed capsicum",
+    "requires": [
+      "capsicum",
+      "beef mince",
+      "tomato"
+    ],
+    "optional": [
+      "onion",
+      "cheese",
+      "garlic"
+    ],
+    "method": "Par-cook the peppers or they stay raw."
+  },
+  {
+    "id": "r31",
+    "name": "Slaw and ham",
+    "requires": [
+      "cabbage",
+      "carrot",
+      "mayonnaise"
+    ],
+    "optional": [
+      "ham",
+      "lemon"
+    ],
+    "method": "Slice the cabbage thinner than feels necessary."
+  },
+  {
+    "id": "r32",
+    "name": "Chopped salad",
+    "requires": [
+      "cucumber",
+      "tomato",
+      "cheese"
+    ],
+    "optional": [
+      "lettuce",
+      "onion",
+      "lemon"
+    ],
+    "method": "Salt the tomatoes ten minutes before."
+  },
+  {
+    "id": "r33",
+    "name": "Avocado on toast",
+    "requires": [
+      "avocado",
+      "bread"
+    ],
+    "optional": [
+      "lemon",
+      "eggs",
+      "tomato",
+      "spring onion"
+    ],
+    "method": "Lemon and salt, more than you think."
+  },
+  {
+    "id": "r34",
+    "name": "Chicken sandwich",
+    "requires": [
+      "chicken",
+      "bread",
+      "mayonnaise"
+    ],
+    "optional": [
+      "lettuce",
+      "tomato",
+      "cucumber"
+    ],
+    "method": "Toast one side of the bread only."
+  },
+  {
+    "id": "r35",
+    "name": "Corn fritters",
+    "requires": [
+      "corn",
+      "eggs"
+    ],
+    "optional": [
+      "spring onion",
+      "cheese",
+      "capsicum"
+    ],
+    "method": "Hot pan, small spoonfuls, don't flatten them."
+  },
+  {
+    "id": "r36",
+    "name": "Pea soup",
+    "requires": [
+      "peas",
+      "onion",
+      "butter"
+    ],
+    "optional": [
+      "cream",
+      "potato",
+      "garlic"
+    ],
+    "method": "Five minutes, not fifteen \u2014 it should stay green."
+  },
+  {
+    "id": "r37",
+    "name": "Beans and bacon",
+    "requires": [
+      "green beans",
+      "bacon",
+      "garlic"
+    ],
+    "optional": [
+      "lemon",
+      "butter"
+    ],
+    "method": "Beans in salted water first, then into the bacon fat."
+  },
+  {
+    "id": "r38",
+    "name": "Sweet potato and sausages",
+    "requires": [
+      "sweet potato",
+      "sausages"
+    ],
+    "optional": [
+      "butter",
+      "onion",
+      "garlic"
+    ],
+    "method": "One tray, oven, forty minutes, turn once."
+  },
+  {
+    "id": "r39",
+    "name": "Banana pancakes",
+    "requires": [
+      "banana",
+      "eggs",
+      "milk"
+    ],
+    "optional": [
+      "butter",
+      "jam",
+      "yogurt"
+    ],
+    "method": "Lumpy batter is correct batter."
+  },
+  {
+    "id": "r40",
+    "name": "Leftovers, warmed",
+    "requires": [
+      "leftovers in a container"
+    ],
+    "optional": [
+      "eggs",
+      "spring onion",
+      "soy sauce",
+      "cheese"
+    ],
+    "method": "An egg on top makes it a different meal."
+  },
+  {
+    "id": "r41",
+    "name": "Cabbage and bacon",
+    "requires": [
+      "cabbage",
+      "bacon",
+      "garlic"
+    ],
+    "optional": [
+      "butter",
+      "spring onion"
+    ],
+    "method": "Let the cabbage catch and colour. Don't steam it."
+  },
+  {
+    "id": "r42",
+    "name": "Spinach pasta",
+    "requires": [
+      "spinach",
+      "cheese",
+      "garlic"
+    ],
+    "optional": [
+      "cream",
+      "lemon",
+      "butter"
+    ],
+    "method": "Wilt the spinach in the pan you'll sauce in."
+  },
+  {
+    "id": "r43",
+    "name": "Steak and salad",
+    "requires": [
+      "steak",
+      "lettuce",
+      "tomato"
+    ],
+    "optional": [
+      "cucumber",
+      "onion",
+      "lemon"
+    ],
+    "method": "Rest it as long as you cooked it."
+  },
+  {
+    "id": "r44",
+    "name": "Potato salad",
+    "requires": [
+      "potato",
+      "mayonnaise",
+      "spring onion"
+    ],
+    "optional": [
+      "eggs",
+      "celery",
+      "lemon"
+    ],
+    "method": "Dress the potatoes while they're still warm."
+  },
+  {
+    "id": "r45",
+    "name": "Beef and mushroom",
+    "requires": [
+      "steak",
+      "mushroom",
+      "onion"
+    ],
+    "optional": [
+      "garlic",
+      "cream",
+      "butter"
+    ],
+    "method": "Mushrooms in a dry pan first, fat after."
+  }
+]

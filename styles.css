@@ -454,3 +454,180 @@ body {
 .fridge-empty[hidden] {
   display: none;
 }
+
+/* ===========================================================================
+   The reveal — Red Stamp (docs/creative/decision-record.md)
+
+   Two motion characters, and the contrast IS the design:
+     drift — eases from rest, 760ms. Consideration.
+     snap  — full speed at frame one, 180ms. Closure.
+   =========================================================================== */
+
+.reveal-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 0 var(--space-4);
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-display);
+  overflow: hidden;
+}
+
+/* The rule draws across the top: something decisive arriving, no costume */
+.reveal-rule {
+  height: 2px;
+  margin: var(--space-6) calc(var(--space-4) * -1) 0;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 240ms cubic-bezier(.2, .8, .2, 1);
+}
+.play .reveal-rule { transform: scaleX(1); }
+
+.reveal-title {
+  margin-top: var(--space-6);
+  /* scales down on narrow phones so a long line like "The last of the
+     onion" doesn't break mid-phrase and lose the three-line rhythm */
+  font-size: clamp(27px, 8.4vw, 38px);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: 0.005em;
+  text-wrap: balance;
+}
+.reveal-title .line {
+  display: block;
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity var(--drift-dur) var(--drift),
+              transform var(--drift-dur) var(--drift);
+}
+.play .reveal-title .line { opacity: 1; transform: translateY(0); }
+.play .reveal-title .line:nth-child(1) { transition-delay: 240ms; }
+.play .reveal-title .line:nth-child(2) { transition-delay: 310ms; }
+.play .reveal-title .line:nth-child(3) { transition-delay: 380ms; }
+
+.reveal-method {
+  margin-top: var(--space-4);
+  max-width: 34ch;
+  color: var(--faint);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  opacity: 0;
+  transition: opacity 400ms linear 700ms;
+}
+.play .reveal-method { opacity: 1; }
+
+.reveal-nothing {
+  margin-top: var(--space-6);
+  font-size: clamp(27px, 8.4vw, 38px);
+  font-weight: 700;
+  line-height: 1.14;
+}
+
+.reveal-foot { margin-top: auto; }
+
+.reveal-label {
+  margin-bottom: var(--space-3);
+  color: var(--faint);
+  font-family: var(--font-label);
+  font-style: italic;
+  font-size: var(--font-size-body);
+  opacity: 0;
+  transition: opacity 400ms linear 700ms;
+}
+.play .reveal-label { opacity: 1; }
+
+/* The stamp. The one thing on the page that snaps, and the moment it lands
+   is the moment the decision closes. */
+.reveal-stamp {
+  align-self: flex-start;
+  display: inline-block;
+  margin-bottom: var(--space-4);
+  padding: var(--space-2) var(--space-3);
+  background: var(--red);
+  color: var(--cream);
+  font-size: var(--font-size-body);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: scale(1.04) rotate(0deg);
+  transition: opacity var(--snap-dur) var(--snap),
+              transform var(--snap-dur) var(--snap);
+}
+.play .reveal-stamp {
+  opacity: 1;
+  transform: scale(1) rotate(-2deg);   /* applied by a hand. Stays crooked */
+  transition-delay: 1000ms;
+}
+/* the date misses its own field by 2px and never corrects */
+.reveal-stamp span { display: inline-block; transform: translate(2px, -2px); }
+
+.reveal-considered {
+  margin-bottom: var(--space-3);
+  color: var(--faint);
+  font-size: 11px;
+  line-height: 1.6;
+  list-style: none;
+}
+.considered-head { letter-spacing: 0.12em; text-transform: uppercase; opacity: .7; }
+
+/* Out: no stagger. It does not perform on the way out. */
+.refusing .reveal-title .line {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 180ms linear, transform 180ms cubic-bezier(.4, 0, 1, 1);
+  transition-delay: 0ms;
+}
+.refusing .reveal-rule { transform: scaleX(0); transition: transform 180ms cubic-bezier(.4, 0, 1, 1); }
+.refusing .reveal-method, .refusing .reveal-stamp { opacity: 0; transition: opacity 180ms linear; }
+
+.btn-refuse, .btn-back-quiet {
+  align-self: flex-start;
+  margin-bottom: var(--space-3);
+  padding: var(--space-2) 0;
+  border: 0;
+  background: none;
+  color: var(--faint);
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.btn-back-quiet { margin-bottom: var(--space-6); }
+
+.no-anim, .no-anim * { transition: none !important; animation: none !important; }
+
+/* ---------------------------------------------------------------------------
+   The button: full-bleed red, pinned to the bottom, the whole bar is the target
+   --------------------------------------------------------------------------- */
+.press-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 72px;
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: 0;
+  background: var(--red);
+  color: var(--cream);
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: left;
+  cursor: pointer;
+  transition: background 60ms linear;
+}
+.press-bar:active { background: #B81F0A; }
+
+/* accelerates out of the bottom of the screen, and comes back as the stamp */
+.press-bar.leaving {
+  transform: translateY(100%);
+  transition: transform 160ms cubic-bezier(.4, 0, 1, 1);
+}

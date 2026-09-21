@@ -1,9 +1,10 @@
 import { getItems, setQuantity, renameItem, removeItem } from '../fridge-store.js';
 import { relabel } from '../learned-examples.js';
 import { quantityStepperHTML, bindQuantityStepper } from './quantity-stepper.js';
+import { pressBarHTML, bindPressBar } from './press-bar.js';
 import { escapeHTML } from '../escape-html.js';
 
-export function renderFridgeScreen(container, { onBack }) {
+export function renderFridgeScreen(container, { onBack, onPress }) {
   container.innerHTML = `
     <section class="fridge-screen" aria-label="My fridge">
       <header class="fridge-header">
@@ -17,6 +18,7 @@ export function renderFridgeScreen(container, { onBack }) {
       </header>
       <ul class="fridge-list"></ul>
       <p class="fridge-empty" hidden>Your fridge is empty.<br />Take a photo of something to add it.</p>
+      ${pressBarHTML('Press')}
     </section>
   `;
 
@@ -24,11 +26,13 @@ export function renderFridgeScreen(container, { onBack }) {
   const empty = container.querySelector('.fridge-empty');
 
   container.querySelector('.btn-back').addEventListener('click', onBack);
+  bindPressBar(container, { onPress });
 
   function render() {
     // Newest first
     const items = getItems().sort((a, b) => b.addedAt.localeCompare(a.addedAt));
     empty.hidden = items.length > 0;
+    container.querySelector('.press-bar').hidden = items.length === 0;
 
     list.innerHTML = items.map(item => `
       <li class="fridge-item">
