@@ -27,6 +27,8 @@
     background: var(--baize);
     font-family: 'Bodoni Moda', serif;
     -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    user-select: none;
     cursor: pointer;
     overflow: hidden;
     display: flex;
@@ -146,7 +148,21 @@
     void stage.offsetWidth;
     stage.classList.add('play');
   }
-  document.body.addEventListener('click', play);
+  const hint = document.querySelector('.hint');
+  let taps = 0, resetTimer;
+  function tap() {
+    play();
+    taps++;
+    hint.textContent = 'replayed \u00d7' + taps + ' \u2014 no motion defined yet';
+    hint.style.opacity = '.75';
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => {
+      hint.textContent = 'tap to replay';
+      hint.style.opacity = '';
+    }, 1400);
+  }
+  // pointerdown, not click: iOS Safari drops click on non-interactive elements
+  document.body.addEventListener('pointerdown', tap);
   play();
 </script>
 </body>
