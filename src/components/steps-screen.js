@@ -29,6 +29,9 @@ const CAMERA = `
   </svg>`;
 
 export function renderStepsScreen(container, { meal, onBack }) {
+  // A recipe with one instruction gets no numeral — 42 of the 54 are genuinely
+  // one instruction, and a lone "1" above a single line looks like a list that
+  // broke. Numerals appear only where there is an order to keep.
   const many = meal.steps.length > 1;
 
   container.innerHTML = `
@@ -38,7 +41,7 @@ export function renderStepsScreen(container, { meal, onBack }) {
       <p class="steps-dish">${escapeHTML(meal.name)}</p>
       <h1 class="steps-head">Steps</h1>
 
-      <ol class="steps-list ${many ? '' : 'single'}">
+      <ol class="steps-list">
         ${meal.steps.map((step, i) => `
           <li>${many ? `<span class="steps-n">${i + 1}</span>` : ''}<span class="steps-text">${escapeHTML(step)}</span></li>
         `).join('')}

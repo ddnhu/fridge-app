@@ -518,9 +518,11 @@ body {
   transition: opacity 520ms var(--drift), transform 520ms var(--drift);
 }
 .play .reveal-accord .line { opacity: 1; transform: translateY(0); }
+/* Heavy overlap: they are one paragraph, not three events. --drift-gap is the
+   one place the stagger is set. */
 .play .reveal-accord .line:nth-child(1) { transition-delay: 420ms; }
-.play .reveal-accord .line:nth-child(2) { transition-delay: 490ms; }
-.play .reveal-accord .line:nth-child(3) { transition-delay: 560ms; }
+.play .reveal-accord .line:nth-child(2) { transition-delay: calc(420ms + var(--drift-gap)); }
+.play .reveal-accord .line:nth-child(3) { transition-delay: calc(420ms + var(--drift-gap) * 2); }
 
 .reveal-nothing {
   margin-top: var(--space-6);
@@ -781,7 +783,7 @@ body {
 .plate {
   position: relative;
   display: block;
-  width: min(300px, 100%);
+  width: min(296px, 100%);        /* 8px grid, per RULES.md */
   aspect-ratio: 1;
   border: 1px solid rgba(20, 18, 16, 0.22);
   cursor: pointer;

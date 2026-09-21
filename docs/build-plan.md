@@ -26,9 +26,14 @@ is done and should not be touched.
 
 ## The one scoping decision, already made
 
-Meal generation runs **locally from a bundled recipe set** — a JSON file of ~40 recipes
-with required and optional ingredients, plus a scoring function that ranks them against
-what's in the fridge. No API, no key, no network.
+Meal generation runs **locally from a bundled recipe set** — a JSON file of recipes with
+required and optional ingredients, plus a scoring function that ranks them against what's
+in the fridge. No API, no key, no network.
+
+> **As built:** 54 recipes in `src/data/recipes.json`. Each has `requires`, `optional`,
+> `steps` (an array — one per action) and `pantry` (cupboard staples, shown but never
+> scored). Written as "~40 recipes, one line of method" on Monday; the method became
+> steps on Wednesday.
 
 Why, so you don't relitigate it Wednesday at midnight: GitHub Pages serves this repo at
 a public URL, so an API key in client-side code is exposed. A local set also can't fail
@@ -77,14 +82,18 @@ No production code today. That's deliberate.
   `experiments/`. Push them and **look at all three on your actual phone.** You decide
   by looking, not by imagining — this is the whole reason the day is structured this way.
 - **Block 3 (45 min).** Run `docs/creative/02-decide.md`. It will eliminate two for you
-  and make you argue. Save the decision record to `docs/direction.md`.
-- **Block 4 (20 min).** Write the five NOT DOING THIS WEEK items at the bottom of
-  `docs/direction.md`. Read them tomorrow when you're tempted.
+  and make you argue. Save the decision record.
+- **Block 4 (20 min).** Write the five NOT DOING THIS WEEK items at the bottom of it.
+  Read them tomorrow when you're tempted.
 
 If you finish early, stop. Do not start building. Tomorrow is long.
 
-**Done when:** `docs/direction.md` exists with a palette, type, the three beats, and the
+**Done when:** the decision record exists with a palette, type, the three beats, and the
 six microcopy lines.
+
+> **Done.** It landed at `docs/creative/decision-record.md`, not `docs/direction.md`.
+> That is the one current design file; everywhere this plan says "the direction", it
+> means that.
 
 ---
 
@@ -131,6 +140,11 @@ Goal: **tonight the app looks like `docs/direction.md` and nothing else.**
 - **Block 5 (30 min).** Push. Check on phone. Park everything you noticed.
 
 **Done when:** a stranger seeing a screenshot could describe the app's personality.
+
+> **What actually happened.** Blocks 1–3 done. **Block 4 was cut** — traded for the steps
+> screen and the post-meal photo, which weren't in this plan. The camera and fridge
+> screens still run the pre-direction dark theme, so two of the five demo beats look like
+> a different app. That was the priced trade and it is the top item on Thursday's list.
 
 ---
 
