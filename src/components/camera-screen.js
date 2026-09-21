@@ -11,7 +11,14 @@ const RECOGNITION_ENABLED = true;
 // Live detection: how often to look, and how many looks in a row must agree
 // before the label changes (stops it flickering while the phone moves)
 const DETECT_INTERVAL_MS = 400;
-const STABLE_FRAMES = 2;
+
+// The live guess is voted across a window of frames rather than taken from
+// the newest one. A packet has to be held at the right angle for its printed
+// name to read, so single frames swing — "celery hearts" comes back as
+// coriander until the label faces the lens. Summing confidence over ~2s means
+// one bad frame can't win, and the right answer accumulates as you move.
+const VOTE_WINDOW = 5;
+const MIN_FOOD_FRAMES = 3;
 
 // Flow:
 //   live   — camera runs; the item in the frame is named automatically.
@@ -84,8 +91,7 @@ export function renderCameraScreen(container, { onContinue }) {
   let mode       = 'live'; // 'live' | 'paused'
   let modelReady = false;
   let detection  = null;   // latest stable result: { label, guesses, embedding }, or null if no food
-  let lastLabel  = undefined;
-  let streak     = 0;
+  let recent     = [];   // last VOTE_WINDOW results; null for "not food"
   const history  = [];     // adds made on this screen, newest last, for undo
 
   function setStatus(text) {
@@ -192,23 +198,40 @@ export function renderCameraScreen(container, { onContinue }) {
   }
 
   function handleResult(result) {
-    const label = result.isFood ? result.guesses[0].label : null;
-    streak = label === lastLabel ? streak + 1 : 1;
-    lastLabel = label;
+    recent.push(result.isFood ? result.guesses : null);
+    if (recent.length > VOTE_WINDOW) recent.shift();
 
-    // Keep the embedding fresh even while the label holds steady
-    if (detection && label === detection.label) detection.embedding = result.embedding;
-    if (streak < STABLE_FRAMES) return;
+    // Sum each label's confidence across the window
+    const totals = new Map();
+    let foodFrames = 0;
+    for (const guesses of recent) {
+      if (!guesses) continue;
+      foodFrames += 1;
+      for (const { label, score } of guesses) {
+        totals.set(label, (totals.get(label) ?? 0) + score);
+      }
+    }
 
-    if (label === null) {
+    // Mostly non-food in the window: nothing is being pointed at
+    if (foodFrames < MIN_FOOD_FRAMES) {
       detection = null;
       showLiveInfo();
       return;
     }
-    if (detection?.label !== label) {
-      detection = { label, guesses: result.guesses.map(g => g.label), embedding: result.embedding };
-      showLiveInfo();
+
+    const ranked = [...totals.entries()].sort((a, b) => b[1] - a[1]).map(([label]) => label);
+    const label = ranked[0];
+
+    // Keep the embedding fresh even while the label holds steady, so what
+    // gets learned on save is the frame you're actually looking at
+    if (detection?.label === label) {
+      detection.embedding = result.embedding;
+      detection.guesses = ranked.slice(0, 3);
+      return;
     }
+
+    detection = { label, guesses: ranked.slice(0, 3), embedding: result.embedding };
+    showLiveInfo();
   }
 
   function showLiveInfo() {
@@ -226,6 +249,7 @@ export function renderCameraScreen(container, { onContinue }) {
 
   function pause() {
     mode = 'paused';
+    recent = [];
 
     // Freeze on the current frame
     if (stream && video.readyState >= 2) {
