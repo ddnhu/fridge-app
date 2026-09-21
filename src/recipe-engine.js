@@ -70,8 +70,12 @@ function accord(match, quantities) {
 /**
  * Ranks every cookable recipe against the fridge, best first.
  *
- * Each entry is { id, name, method, lines, uses } where `lines` is the
+ * Each entry is { id, name, steps, pantry, lines, uses } where `lines` is the
  * three-line accord the reveal sets, already phrased.
+ *
+ * `pantry` is what the cupboard is assumed to hold — salt, oil, the things you
+ * never scan. It is deliberately NOT scored: a dish you can't season isn't a
+ * dish, and asking the camera to find salt would be absurd.
  */
 export async function rank(items = getItems()) {
   const all = await loadRecipes();
@@ -85,7 +89,8 @@ export async function rank(items = getItems()) {
     .map(match => ({
       id: match.recipe.id,
       name: match.recipe.name,
-      method: match.recipe.method,
+      steps: match.recipe.steps,
+      pantry: match.recipe.pantry,
       lines: accord(match, quantities),
       uses: match.uses,
     }));

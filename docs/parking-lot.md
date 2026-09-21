@@ -5,6 +5,39 @@ Friday demo; the point of writing it down is to stop re-deciding it at midnight.
 
 ---
 
+## 2026-09-23 — the Diaries view
+
+A shelf of spines, one per meal cooked, each spine banded with the colours of
+what went into it and set with the dish name running vertically. Danni's
+sketch. **Explicitly not for the demo** — it needs weeks of entries before a
+shelf of two looks like anything other than a shelf of two.
+
+The data it needs now exists: `src/cooked-store.js` keeps `{ id, name, date,
+at, photo }` per meal cooked, so nothing has to be reconstructed later.
+
+**The question to settle before it's built:** the sketch uses five or six
+colours. The direction is two inks, and "every screen that wants a third gets
+redesigned instead". So either the spines are the one place the rule breaks
+(with a reason — the colours are *data*, sampled from the meal, not
+decoration), or they're built in ink and red only and the variation comes from
+band proportion instead of hue. That's a real decision, not a styling detail,
+and it's the reason this isn't a quick build.
+
+---
+
+## 2026-09-23 — OFF the parking lot: the post-meal photo
+
+Parked on 21 September as "needs a post-meal capture flow, storage and a
+history view". Built today at a third of that scope: the capture flow and the
+storage, on the steps screen, with no history view. One photo, on the dish you
+cooked, tonight.
+
+**What it cost:** the camera and fridge screens still look like a different
+app. That was Wednesday's block 4 and it's the first item on the build plan's
+own cut list.
+
+---
+
 ## 2026-09-22 — quantities
 
 **Halves.** `quantity` is already a number, so 0.5 steps and `½` / `1½`

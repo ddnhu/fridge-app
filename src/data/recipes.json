@@ -15,7 +15,17 @@
       "basil",
       "parsley"
     ],
-    "method": "Brown the mince, add the rest, let it go low for as long as you can stand."
+    "steps": [
+      "Brown the mince",
+      "Add the rest",
+      "Let it go low for as long as you can stand"
+    ],
+    "pantry": [
+      "olive oil",
+      "salt",
+      "pepper",
+      "bay leaf"
+    ]
   },
   {
     "id": "r01",
@@ -32,7 +42,13 @@
       "soy sauce",
       "bacon"
     ],
-    "method": "Cold rice, hot pan, egg last."
+    "steps": [
+      "Cold rice, hot pan, egg last."
+    ],
+    "pantry": [
+      "sesame oil",
+      "white pepper"
+    ]
   },
   {
     "id": "r02",
@@ -45,7 +61,16 @@
       "spring onion",
       "soy sauce"
     ],
-    "method": "Scramble, set aside, cook the tomato down, put them back together."
+    "steps": [
+      "Scramble the eggs, set aside",
+      "Cook the tomato down",
+      "Put them back together"
+    ],
+    "pantry": [
+      "sesame oil",
+      "sugar",
+      "salt"
+    ]
   },
   {
     "id": "r03",
@@ -58,7 +83,13 @@
     "optional": [
       "garlic"
     ],
-    "method": "Pasta water into the egg and cheese off the heat, or it scrambles."
+    "steps": [
+      "Pasta water into the egg and cheese off the heat, or it scrambles."
+    ],
+    "pantry": [
+      "pepper",
+      "salt"
+    ]
   },
   {
     "id": "r04",
@@ -76,7 +107,15 @@
       "parsley",
       "feta"
     ],
-    "method": "Low heat, pull the edges in, fold before it looks done."
+    "steps": [
+      "Low heat, pull the edges in",
+      "Fold before it looks done"
+    ],
+    "pantry": [
+      "butter",
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r05",
@@ -94,7 +133,17 @@
       "chilli",
       "feta"
     ],
-    "method": "Simmer the sauce, make wells, crack the eggs in, lid on."
+    "steps": [
+      "Simmer the sauce",
+      "Make wells and crack the eggs in",
+      "Lid on"
+    ],
+    "pantry": [
+      "cumin",
+      "paprika",
+      "olive oil",
+      "salt"
+    ]
   },
   {
     "id": "r06",
@@ -111,7 +160,15 @@
       "parsley",
       "chives"
     ],
-    "method": "Start it on the stove, finish it under the grill."
+    "steps": [
+      "Start it on the stove",
+      "Finish it under the grill"
+    ],
+    "pantry": [
+      "olive oil",
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r07",
@@ -129,7 +186,14 @@
       "parmesan",
       "parsley"
     ],
-    "method": "Stir more than you think, add liquid slowly."
+    "steps": [
+      "Stir more than you think, add liquid slowly."
+    ],
+    "pantry": [
+      "stock",
+      "white wine",
+      "salt"
+    ]
   },
   {
     "id": "r08",
@@ -149,7 +213,14 @@
       "bok choy",
       "snow peas"
     ],
-    "method": "Pan hotter than feels sensible, everything moving."
+    "steps": [
+      "Pan hotter than feels sensible, everything moving."
+    ],
+    "pantry": [
+      "sesame oil",
+      "white pepper",
+      "cornflour"
+    ]
   },
   {
     "id": "r09",
@@ -165,7 +236,15 @@
       "ginger",
       "chilli"
     ],
-    "method": "Sear the beef first, take it out, put it back at the end."
+    "steps": [
+      "Sear the beef, take it out",
+      "Put it back at the end"
+    ],
+    "pantry": [
+      "cornflour",
+      "sesame oil",
+      "white pepper"
+    ]
   },
   {
     "id": "r10",
@@ -182,7 +261,14 @@
       "coriander",
       "white fish fillet"
     ],
-    "method": "Rice and a lot of water, an hour, stir when you remember."
+    "steps": [
+      "Rice and a lot of water, an hour, stir when you remember."
+    ],
+    "pantry": [
+      "white pepper",
+      "sesame oil",
+      "salt"
+    ]
   },
   {
     "id": "r11",
@@ -198,7 +284,13 @@
       "chilli",
       "ginger"
     ],
-    "method": "Gentle with the tofu \u2014 push it around, don't stir."
+    "steps": [
+      "Gentle with the tofu — push it around, don't stir."
+    ],
+    "pantry": [
+      "chilli bean paste",
+      "sichuan pepper"
+    ]
   },
   {
     "id": "r12",
@@ -215,7 +307,13 @@
       "chilli",
       "bok choy"
     ],
-    "method": "Crisp the tofu properly before anything green goes in."
+    "steps": [
+      "Crisp the tofu properly before anything green goes in."
+    ],
+    "pantry": [
+      "sesame oil",
+      "chilli flakes"
+    ]
   },
   {
     "id": "r13",
@@ -233,7 +331,15 @@
       "thyme",
       "leek"
     ],
-    "method": "Soften, simmer, blend some of it and leave the rest."
+    "steps": [
+      "Soften, then simmer",
+      "Blend some of it and leave the rest"
+    ],
+    "pantry": [
+      "stock",
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r14",
@@ -250,7 +356,15 @@
       "ginger",
       "sour cream"
     ],
-    "method": "Roast the pumpkin first if you have the patience."
+    "steps": [
+      "Roast the pumpkin first if you have the patience."
+    ],
+    "pantry": [
+      "olive oil",
+      "nutmeg",
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r15",
@@ -268,7 +382,15 @@
       "basil",
       "parsley"
     ],
-    "method": "Everything diced small, everything in, long and slow."
+    "steps": [
+      "Everything diced small, everything in, long and slow."
+    ],
+    "pantry": [
+      "olive oil",
+      "stock",
+      "bay leaf",
+      "salt"
+    ]
   },
   {
     "id": "r16",
@@ -286,7 +408,14 @@
       "thyme",
       "beetroot"
     ],
-    "method": "Hotter oven than you think, one layer, don't crowd the tray."
+    "steps": [
+      "Hotter oven than you think, one layer, don't crowd the tray."
+    ],
+    "pantry": [
+      "olive oil",
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r17",
@@ -299,7 +428,14 @@
     "optional": [
       "butter"
     ],
-    "method": "Undercook the cauliflower \u2014 the oven finishes it."
+    "steps": [
+      "Undercook the cauliflower — the oven finishes it."
+    ],
+    "pantry": [
+      "flour",
+      "mustard",
+      "nutmeg"
+    ]
   },
   {
     "id": "r18",
@@ -314,7 +450,14 @@
       "mustard",
       "parmesan"
     ],
-    "method": "Roux first, cheese off the heat."
+    "steps": [
+      "Roux first",
+      "Cheese off the heat"
+    ],
+    "pantry": [
+      "flour",
+      "salt"
+    ]
   },
   {
     "id": "r19",
@@ -330,7 +473,13 @@
       "pickles",
       "mustard"
     ],
-    "method": "Butter the outside, low heat, be patient."
+    "steps": [
+      "Butter the outside, low heat, be patient."
+    ],
+    "pantry": [
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r20",
@@ -346,7 +495,14 @@
       "banana",
       "honey"
     ],
-    "method": "Let the bread actually soak."
+    "steps": [
+      "Let the bread actually soak."
+    ],
+    "pantry": [
+      "cinnamon",
+      "sugar",
+      "vanilla"
+    ]
   },
   {
     "id": "r21",
@@ -360,7 +516,14 @@
       "tomato",
       "mushroom"
     ],
-    "method": "Bacon first, eggs in the fat."
+    "steps": [
+      "Bacon first",
+      "Eggs in the fat"
+    ],
+    "pantry": [
+      "pepper",
+      "salt"
+    ]
   },
   {
     "id": "r22",
@@ -376,7 +539,13 @@
       "mustard",
       "thyme"
     ],
-    "method": "More butter in the mash than you'd admit to."
+    "steps": [
+      "More butter in the mash than you'd admit to."
+    ],
+    "pantry": [
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r23",
@@ -394,7 +563,15 @@
       "leek",
       "noodles"
     ],
-    "method": "Barely a simmer, never a boil."
+    "steps": [
+      "Barely a simmer, never a boil."
+    ],
+    "pantry": [
+      "stock",
+      "bay leaf",
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r24",
@@ -410,7 +587,14 @@
       "dill",
       "snow peas"
     ],
-    "method": "Skin side down, most of the time, don't move it."
+    "steps": [
+      "Skin side down, most of the time, don't move it."
+    ],
+    "pantry": [
+      "olive oil",
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r25",
@@ -428,7 +612,14 @@
       "parsley",
       "basil"
     ],
-    "method": "Prawns take three minutes. Have everything else ready."
+    "steps": [
+      "Prawns take three minutes. Have everything else ready."
+    ],
+    "pantry": [
+      "olive oil",
+      "chilli flakes",
+      "salt"
+    ]
   },
   {
     "id": "r26",
@@ -444,7 +635,14 @@
       "parsley",
       "chilli"
     ],
-    "method": "Bread is not optional, whatever the list says."
+    "steps": [
+      "Bread is not optional, whatever the list says."
+    ],
+    "pantry": [
+      "olive oil",
+      "chilli flakes",
+      "salt"
+    ]
   },
   {
     "id": "r27",
@@ -461,7 +659,15 @@
       "mint",
       "feta"
     ],
-    "method": "Salt the zucchini and squeeze it dry, or they'll be soggy."
+    "steps": [
+      "Salt the zucchini and squeeze it dry, or they'll be soggy."
+    ],
+    "pantry": [
+      "flour",
+      "salt",
+      "pepper",
+      "olive oil"
+    ]
   },
   {
     "id": "r28",
@@ -477,7 +683,14 @@
       "basil",
       "parmesan"
     ],
-    "method": "Salt the eggplant, wait, pat it dry."
+    "steps": [
+      "Salt the eggplant, wait, pat it dry."
+    ],
+    "pantry": [
+      "olive oil",
+      "oregano",
+      "salt"
+    ]
   },
   {
     "id": "r29",
@@ -494,7 +707,14 @@
       "basil",
       "thyme"
     ],
-    "method": "Cook each thing separately, then together. It matters."
+    "steps": [
+      "Cook each thing separately, then together. It matters."
+    ],
+    "pantry": [
+      "olive oil",
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r30",
@@ -511,7 +731,15 @@
       "parsley",
       "feta"
     ],
-    "method": "Par-cook the peppers or they stay raw."
+    "steps": [
+      "Par-cook the peppers or they stay raw."
+    ],
+    "pantry": [
+      "olive oil",
+      "paprika",
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r31",
@@ -527,7 +755,14 @@
       "mint",
       "chives"
     ],
-    "method": "Slice the cabbage thinner than feels necessary."
+    "steps": [
+      "Slice the cabbage thinner than feels necessary."
+    ],
+    "pantry": [
+      "vinegar",
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r32",
@@ -546,7 +781,15 @@
       "mint",
       "parsley"
     ],
-    "method": "Salt the tomatoes ten minutes before."
+    "steps": [
+      "Salt the tomatoes ten minutes before."
+    ],
+    "pantry": [
+      "olive oil",
+      "vinegar",
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r33",
@@ -564,7 +807,14 @@
       "coriander",
       "feta"
     ],
-    "method": "Lemon and salt, more than you think."
+    "steps": [
+      "Lemon and salt, more than you think."
+    ],
+    "pantry": [
+      "salt",
+      "chilli flakes",
+      "olive oil"
+    ]
   },
   {
     "id": "r34",
@@ -581,7 +831,13 @@
       "pickles",
       "mustard"
     ],
-    "method": "Toast one side of the bread only."
+    "steps": [
+      "Toast one side of the bread only."
+    ],
+    "pantry": [
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r35",
@@ -597,7 +853,15 @@
       "coriander",
       "chilli"
     ],
-    "method": "Hot pan, small spoonfuls, don't flatten them."
+    "steps": [
+      "Hot pan, small spoonfuls, don't flatten them."
+    ],
+    "pantry": [
+      "flour",
+      "salt",
+      "pepper",
+      "olive oil"
+    ]
   },
   {
     "id": "r36",
@@ -614,7 +878,14 @@
       "mint",
       "sour cream"
     ],
-    "method": "Five minutes, not fifteen \u2014 it should stay green."
+    "steps": [
+      "Five minutes, not fifteen — it should stay green."
+    ],
+    "pantry": [
+      "stock",
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r37",
@@ -629,7 +900,15 @@
       "butter",
       "parmesan"
     ],
-    "method": "Beans in salted water first, then into the bacon fat."
+    "steps": [
+      "Beans in salted water first",
+      "Then into the bacon fat"
+    ],
+    "pantry": [
+      "salt",
+      "pepper",
+      "olive oil"
+    ]
   },
   {
     "id": "r38",
@@ -643,7 +922,15 @@
       "onion",
       "garlic"
     ],
-    "method": "One tray, oven, forty minutes, turn once."
+    "steps": [
+      "One tray, oven, forty minutes, turn once."
+    ],
+    "pantry": [
+      "olive oil",
+      "paprika",
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r39",
@@ -660,7 +947,14 @@
       "honey",
       "peanut butter"
     ],
-    "method": "Lumpy batter is correct batter."
+    "steps": [
+      "Lumpy batter is correct batter."
+    ],
+    "pantry": [
+      "flour",
+      "baking powder",
+      "cinnamon"
+    ]
   },
   {
     "id": "r40",
@@ -676,7 +970,14 @@
       "chilli",
       "coriander"
     ],
-    "method": "An egg on top makes it a different meal."
+    "steps": [
+      "An egg on top makes it a different meal."
+    ],
+    "pantry": [
+      "salt",
+      "pepper",
+      "chilli sauce"
+    ]
   },
   {
     "id": "r41",
@@ -691,7 +992,13 @@
       "spring onion",
       "thyme"
     ],
-    "method": "Let the cabbage catch and colour. Don't steam it."
+    "steps": [
+      "Let the cabbage catch and colour. Don't steam it."
+    ],
+    "pantry": [
+      "pepper",
+      "vinegar"
+    ]
   },
   {
     "id": "r42",
@@ -709,7 +1016,15 @@
       "chilli",
       "parsley"
     ],
-    "method": "Wilt the spinach in the pan you'll sauce in."
+    "steps": [
+      "Wilt the spinach in the pan you'll sauce in."
+    ],
+    "pantry": [
+      "olive oil",
+      "chilli flakes",
+      "nutmeg",
+      "salt"
+    ]
   },
   {
     "id": "r43",
@@ -727,7 +1042,15 @@
       "olives",
       "parsley"
     ],
-    "method": "Rest it as long as you cooked it."
+    "steps": [
+      "Rest it as long as you cooked it."
+    ],
+    "pantry": [
+      "olive oil",
+      "salt",
+      "pepper",
+      "vinegar"
+    ]
   },
   {
     "id": "r44",
@@ -746,7 +1069,13 @@
       "mustard",
       "pickles"
     ],
-    "method": "Dress the potatoes while they're still warm."
+    "steps": [
+      "Dress the potatoes while they're still warm."
+    ],
+    "pantry": [
+      "vinegar",
+      "salt"
+    ]
   },
   {
     "id": "r45",
@@ -763,7 +1092,14 @@
       "thyme",
       "mustard"
     ],
-    "method": "Mushrooms in a dry pan first, fat after."
+    "steps": [
+      "Mushrooms in a dry pan first",
+      "Fat after"
+    ],
+    "pantry": [
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r46",
@@ -780,7 +1116,14 @@
       "coriander",
       "soy sauce"
     ],
-    "method": "Broth first, noodles last, or they go to mush."
+    "steps": [
+      "Broth first",
+      "Noodles last, or they go to mush"
+    ],
+    "pantry": [
+      "stock",
+      "white pepper"
+    ]
   },
   {
     "id": "r47",
@@ -798,7 +1141,15 @@
       "spinach",
       "tomato"
     ],
-    "method": "Fry the spices in oil before anything wet goes in."
+    "steps": [
+      "Fry the spices in oil before anything wet goes in."
+    ],
+    "pantry": [
+      "cumin",
+      "turmeric",
+      "coriander seed",
+      "olive oil"
+    ]
   },
   {
     "id": "r48",
@@ -814,7 +1165,14 @@
       "spring onion",
       "chilli"
     ],
-    "method": "Drain it properly. Twice."
+    "steps": [
+      "Drain it properly. Twice."
+    ],
+    "pantry": [
+      "lemon",
+      "pepper",
+      "salt"
+    ]
   },
   {
     "id": "r49",
@@ -831,7 +1189,14 @@
       "chicken",
       "chickpeas"
     ],
-    "method": "Dry pan, weight it down with something flat."
+    "steps": [
+      "Dry pan, weight it down with something flat."
+    ],
+    "pantry": [
+      "olive oil",
+      "paprika",
+      "salt"
+    ]
   },
   {
     "id": "r50",
@@ -846,7 +1211,14 @@
       "lemon",
       "peas"
     ],
-    "method": "Rest it under foil while you finish everything else."
+    "steps": [
+      "Rest it under foil while you finish everything else."
+    ],
+    "pantry": [
+      "olive oil",
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r51",
@@ -863,7 +1235,14 @@
       "chilli",
       "feta"
     ],
-    "method": "Not cooking. Still dinner."
+    "steps": [
+      "Not cooking. Still dinner."
+    ],
+    "pantry": [
+      "olive oil",
+      "cumin",
+      "salt"
+    ]
   },
   {
     "id": "r52",
@@ -879,7 +1258,14 @@
       "dill",
       "garlic"
     ],
-    "method": "Four minutes a side, no more."
+    "steps": [
+      "Four minutes a side, no more."
+    ],
+    "pantry": [
+      "olive oil",
+      "salt",
+      "pepper"
+    ]
   },
   {
     "id": "r53",
@@ -894,6 +1280,14 @@
       "rosemary",
       "cabbage"
     ],
-    "method": "Sear the fat edge first, standing them up."
+    "steps": [
+      "Sear the fat edge first, standing them up."
+    ],
+    "pantry": [
+      "olive oil",
+      "salt",
+      "pepper",
+      "thyme"
+    ]
   }
 ]

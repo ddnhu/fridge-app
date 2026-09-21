@@ -522,17 +522,6 @@ body {
 .play .reveal-accord .line:nth-child(2) { transition-delay: 490ms; }
 .play .reveal-accord .line:nth-child(3) { transition-delay: 560ms; }
 
-.reveal-method {
-  margin-top: var(--space-4);
-  max-width: 34ch;
-  color: var(--faint);
-  font-size: var(--font-size-body);
-  line-height: var(--line-height-body);
-  opacity: 0;
-  transition: opacity 400ms linear 820ms;
-}
-.play .reveal-method { opacity: 1; }
-
 .reveal-nothing {
   margin-top: var(--space-6);
   font-size: clamp(34px, 11vw, 48px);
@@ -598,9 +587,9 @@ body {
   transition-delay: 0ms;
 }
 .refusing .reveal-rule { transform: scaleX(0); transition: transform 180ms cubic-bezier(.4, 0, 1, 1); }
-.refusing .reveal-method, .refusing .reveal-stamp { opacity: 0; transition: opacity 180ms linear; }
+.refusing .reveal-stamp { opacity: 0; transition: opacity 180ms linear; }
 
-.btn-refuse, .btn-back-quiet {
+.btn-refuse, .btn-back-quiet, .btn-steps {
   align-self: flex-start;
   margin-bottom: var(--space-3);
   padding: var(--space-2) 0;
@@ -613,6 +602,19 @@ body {
   text-transform: uppercase;
   cursor: pointer;
 }
+
+/* Going to cook it is the forward action, so it carries ink where the other
+   two stay faint. It arrives only once the stamp has landed — until the
+   decision closes there is nothing to go and do. */
+.btn-steps {
+  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  opacity: 0;
+  transition: opacity 400ms linear 1300ms;
+}
+.play .btn-steps { opacity: 1; }
+.refusing .btn-steps { opacity: 0; transition: opacity 180ms linear; }
 .btn-back-quiet { margin-bottom: var(--space-6); }
 
 .no-anim, .no-anim * { transition: none !important; animation: none !important; }
@@ -662,3 +664,207 @@ body {
 
 /* the reveal's own controls sit above the home indicator too */
 .btn-back-quiet { margin-bottom: calc(var(--space-6) + env(safe-area-inset-bottom, 0px)); }
+
+/* ===========================================================================
+   The steps — how to cook it, and proof that you did
+
+   A separate page because steps are read differently from a decision: you come
+   back to them mid-cook, with one hand, and the reveal has to stay a single
+   held moment rather than a page you scroll.
+
+   Motion budget: everything drifts. The one thing that SNAPS is the photo
+   landing, and it rhymes with the stamp deliberately — the stamp closes the
+   decision, the photo closes the meal.
+   =========================================================================== */
+
+.steps-screen {
+  position: fixed;
+  inset: 0;
+  padding: 0 var(--space-4) calc(var(--space-8) + env(safe-area-inset-bottom, 0px));
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-display);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.steps-back {
+  margin-top: calc(var(--space-4) + env(safe-area-inset-top, 0px));
+  margin-bottom: 0;
+}
+
+/* You already saw the dish at 48px one screen ago. Here it's a reminder of
+   what you're standing at the stove for, not the reveal again. */
+.steps-dish {
+  margin-top: var(--space-5);
+  color: var(--faint);
+  font-family: var(--font-label);
+  font-style: italic;
+  font-size: var(--font-size-body);
+}
+
+.steps-head {
+  margin-top: var(--space-1);
+  font-size: clamp(28px, 8vw, 34px);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.01em;
+}
+
+/* The gap between steps IS the fix. Two actions on two different things were
+   being run into one sentence; 24px of air is what makes them two jobs. */
+.steps-list {
+  margin-top: var(--space-5);
+  padding: 0;                     /* an <ol> indents by 40px even with no marker */
+  list-style: none;
+}
+.steps-list li {
+  margin-bottom: var(--space-5);
+}
+.steps-list li:last-child { margin-bottom: 0; }
+
+/* The numeral sits ABOVE its step, not beside it. Beside it, the step text
+   starts 34px in and the page loses the single left edge everything else is
+   locked to — and there isn't room to hang the numeral in a 24px gutter.
+   Stacked, every line on the page starts at the same place. */
+.steps-n {
+  display: block;
+  margin-bottom: var(--space-1);
+  color: var(--faint);
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.14em;         /* the stamp's tracking. Same family of mark */
+}
+
+.steps-text { display: block; }
+
+.steps-text {
+  font-size: clamp(17px, 5vw, 20px);
+  font-weight: 500;
+  line-height: 1.42;
+  max-width: 30ch;
+}
+
+/* A recipe with one instruction keeps it as a sentence and gets no numeral —
+   a lone "1" above a single line looks like a list that broke. 42 of the 54
+   are genuinely one instruction, and that terseness is the point of them. */
+
+/* What the cupboard is assumed to hold. It rhymes with "from the fridge" on
+   the reveal because it's the same sentence about a different shelf. */
+.steps-pantry { margin-top: var(--space-7); }
+
+.steps-pantry-label {
+  color: var(--faint);
+  font-family: var(--font-label);
+  font-style: italic;
+  font-size: var(--font-size-body);
+}
+
+.steps-pantry-list {
+  margin-top: var(--space-2);
+  font-size: var(--font-size-body);
+  font-weight: 500;
+  line-height: 1.5;
+  max-width: 30ch;
+}
+
+/* ---------------------------------------------------------------------------
+   The plate: where the meal gets recorded
+   --------------------------------------------------------------------------- */
+.plate-block { margin-top: var(--space-7); }
+
+/* Left-locked and square rather than full-bleed: a photograph placed on a page,
+   not a banner. Square also because these are meant to sit together one day
+   (docs/parking-lot.md, "Diaries") and a grid of squares is the only thing that
+   tiles without cropping twice. */
+.plate {
+  position: relative;
+  display: block;
+  width: min(300px, 100%);
+  aspect-ratio: 1;
+  border: 1px solid rgba(20, 18, 16, 0.22);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+/* The file input is the whole target — on a phone this opens the camera
+   directly, which is two taps fewer than asking for a stream and a shutter. */
+.plate-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.plate-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 64px;
+  height: 48px;
+  transform: translate(-50%, -50%);
+  color: var(--faint);
+  pointer-events: none;
+}
+.plate.filled .plate-icon { display: none; }
+
+.plate-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.plate.working { opacity: 0.5; transition: opacity 120ms linear; }
+
+/* snap: full speed at frame one, stops dead. The same closure as the stamp. */
+.plate.landing .plate-photo {
+  animation: plate-land var(--snap-dur) var(--snap);
+}
+@keyframes plate-land {
+  from { opacity: 0; transform: scale(1.04); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.plate-label {
+  margin-top: var(--space-2);
+  color: var(--faint);
+  font-family: var(--font-label);
+  font-style: italic;
+  font-size: var(--font-size-body);
+}
+
+/* Arrival: one drift group, short. This page is a set of instructions, not a
+   second reveal — it should be readable before you've finished looking at it. */
+.steps-screen .steps-dish,
+.steps-screen .steps-head,
+.steps-screen .steps-list li,
+.steps-screen .steps-pantry,
+.steps-screen .plate-block {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 520ms var(--drift), transform 520ms var(--drift);
+}
+.steps-screen.play .steps-dish,
+.steps-screen.play .steps-head,
+.steps-screen.play .steps-list li,
+.steps-screen.play .steps-pantry,
+.steps-screen.play .plate-block {
+  opacity: 1;
+  transform: translateY(0);
+}
+.steps-screen.play .steps-head          { transition-delay: 60ms; }
+.steps-screen.play .steps-list li:nth-child(1) { transition-delay: 140ms; }
+.steps-screen.play .steps-list li:nth-child(2) { transition-delay: 200ms; }
+.steps-screen.play .steps-list li:nth-child(3) { transition-delay: 260ms; }
+.steps-screen.play .steps-list li:nth-child(4) { transition-delay: 320ms; }
+.steps-screen.play .steps-pantry        { transition-delay: 380ms; }
+.steps-screen.play .plate-block         { transition-delay: 440ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .steps-screen *, .plate.landing .plate-photo {
+    transition: none !important;
+    animation: none !important;
+  }
+}
