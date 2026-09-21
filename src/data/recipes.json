@@ -11,7 +11,9 @@
       "carrot",
       "celery",
       "garlic",
-      "cheese"
+      "cheese",
+      "basil",
+      "parsley"
     ],
     "method": "Brown the mince, add the rest, let it go low for as long as you can stand."
   },
@@ -69,7 +71,10 @@
       "mushroom",
       "spinach",
       "ham",
-      "spring onion"
+      "spring onion",
+      "chives",
+      "parsley",
+      "feta"
     ],
     "method": "Low heat, pull the edges in, fold before it looks done."
   },
@@ -84,7 +89,10 @@
     "optional": [
       "capsicum",
       "garlic",
-      "spinach"
+      "spinach",
+      "coriander",
+      "chilli",
+      "feta"
     ],
     "method": "Simmer the sauce, make wells, crack the eggs in, lid on."
   },
@@ -99,7 +107,9 @@
     "optional": [
       "cheese",
       "spinach",
-      "bacon"
+      "bacon",
+      "parsley",
+      "chives"
     ],
     "method": "Start it on the stove, finish it under the grill."
   },
@@ -114,7 +124,10 @@
     "optional": [
       "garlic",
       "cheese",
-      "cream"
+      "cream",
+      "thyme",
+      "parmesan",
+      "parsley"
     ],
     "method": "Stir more than you think, add liquid slowly."
   },
@@ -130,7 +143,11 @@
       "broccoli",
       "garlic",
       "soy sauce",
-      "carrot"
+      "carrot",
+      "ginger",
+      "chilli",
+      "bok choy",
+      "snow peas"
     ],
     "method": "Pan hotter than feels sensible, everything moving."
   },
@@ -144,7 +161,9 @@
     ],
     "optional": [
       "soy sauce",
-      "spring onion"
+      "spring onion",
+      "ginger",
+      "chilli"
     ],
     "method": "Sear the beef first, take it out, put it back at the end."
   },
@@ -158,7 +177,10 @@
       "eggs",
       "chicken",
       "soy sauce",
-      "leftovers in a container"
+      "leftovers in a container",
+      "ginger",
+      "coriander",
+      "white fish fillet"
     ],
     "method": "Rice and a lot of water, an hour, stir when you remember."
   },
@@ -172,7 +194,9 @@
     ],
     "optional": [
       "spring onion",
-      "soy sauce"
+      "soy sauce",
+      "chilli",
+      "ginger"
     ],
     "method": "Gentle with the tofu \u2014 push it around, don't stir."
   },
@@ -186,7 +210,10 @@
     ],
     "optional": [
       "soy sauce",
-      "spring onion"
+      "spring onion",
+      "ginger",
+      "chilli",
+      "bok choy"
     ],
     "method": "Crisp the tofu properly before anything green goes in."
   },
@@ -201,7 +228,10 @@
     "optional": [
       "butter",
       "celery",
-      "garlic"
+      "garlic",
+      "chives",
+      "thyme",
+      "leek"
     ],
     "method": "Soften, simmer, blend some of it and leave the rest."
   },
@@ -215,7 +245,10 @@
     "optional": [
       "cream",
       "garlic",
-      "butter"
+      "butter",
+      "coconut milk",
+      "ginger",
+      "sour cream"
     ],
     "method": "Roast the pumpkin first if you have the patience."
   },
@@ -231,7 +264,9 @@
     "optional": [
       "cabbage",
       "green beans",
-      "garlic"
+      "garlic",
+      "basil",
+      "parsley"
     ],
     "method": "Everything diced small, everything in, long and slow."
   },
@@ -246,7 +281,10 @@
       "pumpkin",
       "onion",
       "garlic",
-      "sweet potato"
+      "sweet potato",
+      "rosemary",
+      "thyme",
+      "beetroot"
     ],
     "method": "Hotter oven than you think, one layer, don't crowd the tray."
   },
@@ -273,7 +311,8 @@
     ],
     "optional": [
       "bacon",
-      "mustard"
+      "mustard",
+      "parmesan"
     ],
     "method": "Roux first, cheese off the heat."
   },
@@ -287,7 +326,9 @@
     ],
     "optional": [
       "ham",
-      "tomato"
+      "tomato",
+      "pickles",
+      "mustard"
     ],
     "method": "Butter the outside, low heat, be patient."
   },
@@ -302,7 +343,8 @@
     "optional": [
       "butter",
       "jam",
-      "banana"
+      "banana",
+      "honey"
     ],
     "method": "Let the bread actually soak."
   },
@@ -330,7 +372,9 @@
     ],
     "optional": [
       "onion",
-      "milk"
+      "milk",
+      "mustard",
+      "thyme"
     ],
     "method": "More butter in the mash than you'd admit to."
   },
@@ -345,7 +389,10 @@
     "optional": [
       "onion",
       "spring onion",
-      "garlic"
+      "garlic",
+      "parsley",
+      "leek",
+      "noodles"
     ],
     "method": "Barely a simmer, never a boil."
   },
@@ -359,7 +406,9 @@
     "optional": [
       "lemon",
       "butter",
-      "garlic"
+      "garlic",
+      "dill",
+      "snow peas"
     ],
     "method": "Skin side down, most of the time, don't move it."
   },
@@ -374,7 +423,10 @@
     "optional": [
       "tomato",
       "cream",
-      "spring onion"
+      "spring onion",
+      "chilli",
+      "parsley",
+      "basil"
     ],
     "method": "Prawns take three minutes. Have everything else ready."
   },
@@ -388,7 +440,9 @@
     ],
     "optional": [
       "lemon",
-      "bread"
+      "bread",
+      "parsley",
+      "chilli"
     ],
     "method": "Bread is not optional, whatever the list says."
   },
@@ -402,7 +456,10 @@
     "optional": [
       "cheese",
       "spring onion",
-      "garlic"
+      "garlic",
+      "dill",
+      "mint",
+      "feta"
     ],
     "method": "Salt the zucchini and squeeze it dry, or they'll be soggy."
   },
@@ -416,7 +473,9 @@
     ],
     "optional": [
       "garlic",
-      "onion"
+      "onion",
+      "basil",
+      "parmesan"
     ],
     "method": "Salt the eggplant, wait, pat it dry."
   },
@@ -431,7 +490,9 @@
     "optional": [
       "capsicum",
       "onion",
-      "garlic"
+      "garlic",
+      "basil",
+      "thyme"
     ],
     "method": "Cook each thing separately, then together. It matters."
   },
@@ -446,7 +507,9 @@
     "optional": [
       "onion",
       "cheese",
-      "garlic"
+      "garlic",
+      "parsley",
+      "feta"
     ],
     "method": "Par-cook the peppers or they stay raw."
   },
@@ -460,7 +523,9 @@
     ],
     "optional": [
       "ham",
-      "lemon"
+      "lemon",
+      "mint",
+      "chives"
     ],
     "method": "Slice the cabbage thinner than feels necessary."
   },
@@ -475,7 +540,11 @@
     "optional": [
       "lettuce",
       "onion",
-      "lemon"
+      "lemon",
+      "olives",
+      "feta",
+      "mint",
+      "parsley"
     ],
     "method": "Salt the tomatoes ten minutes before."
   },
@@ -490,7 +559,10 @@
       "lemon",
       "eggs",
       "tomato",
-      "spring onion"
+      "spring onion",
+      "chilli",
+      "coriander",
+      "feta"
     ],
     "method": "Lemon and salt, more than you think."
   },
@@ -505,7 +577,9 @@
     "optional": [
       "lettuce",
       "tomato",
-      "cucumber"
+      "cucumber",
+      "pickles",
+      "mustard"
     ],
     "method": "Toast one side of the bread only."
   },
@@ -519,7 +593,9 @@
     "optional": [
       "spring onion",
       "cheese",
-      "capsicum"
+      "capsicum",
+      "coriander",
+      "chilli"
     ],
     "method": "Hot pan, small spoonfuls, don't flatten them."
   },
@@ -534,7 +610,9 @@
     "optional": [
       "cream",
       "potato",
-      "garlic"
+      "garlic",
+      "mint",
+      "sour cream"
     ],
     "method": "Five minutes, not fifteen \u2014 it should stay green."
   },
@@ -548,7 +626,8 @@
     ],
     "optional": [
       "lemon",
-      "butter"
+      "butter",
+      "parmesan"
     ],
     "method": "Beans in salted water first, then into the bacon fat."
   },
@@ -577,7 +656,9 @@
     "optional": [
       "butter",
       "jam",
-      "yogurt"
+      "yogurt",
+      "honey",
+      "peanut butter"
     ],
     "method": "Lumpy batter is correct batter."
   },
@@ -591,7 +672,9 @@
       "eggs",
       "spring onion",
       "soy sauce",
-      "cheese"
+      "cheese",
+      "chilli",
+      "coriander"
     ],
     "method": "An egg on top makes it a different meal."
   },
@@ -605,7 +688,8 @@
     ],
     "optional": [
       "butter",
-      "spring onion"
+      "spring onion",
+      "thyme"
     ],
     "method": "Let the cabbage catch and colour. Don't steam it."
   },
@@ -620,7 +704,10 @@
     "optional": [
       "cream",
       "lemon",
-      "butter"
+      "butter",
+      "parmesan",
+      "chilli",
+      "parsley"
     ],
     "method": "Wilt the spinach in the pan you'll sauce in."
   },
@@ -635,7 +722,10 @@
     "optional": [
       "cucumber",
       "onion",
-      "lemon"
+      "lemon",
+      "mustard",
+      "olives",
+      "parsley"
     ],
     "method": "Rest it as long as you cooked it."
   },
@@ -650,7 +740,11 @@
     "optional": [
       "eggs",
       "celery",
-      "lemon"
+      "lemon",
+      "dill",
+      "chives",
+      "mustard",
+      "pickles"
     ],
     "method": "Dress the potatoes while they're still warm."
   },
@@ -665,8 +759,141 @@
     "optional": [
       "garlic",
       "cream",
-      "butter"
+      "butter",
+      "thyme",
+      "mustard"
     ],
     "method": "Mushrooms in a dry pan first, fat after."
+  },
+  {
+    "id": "r46",
+    "name": "Noodle soup",
+    "requires": [
+      "noodles",
+      "spring onion"
+    ],
+    "optional": [
+      "chicken",
+      "bok choy",
+      "ginger",
+      "chilli",
+      "coriander",
+      "soy sauce"
+    ],
+    "method": "Broth first, noodles last, or they go to mush."
+  },
+  {
+    "id": "r47",
+    "name": "Chickpea curry",
+    "requires": [
+      "chickpeas",
+      "onion",
+      "coconut milk"
+    ],
+    "optional": [
+      "ginger",
+      "garlic",
+      "chilli",
+      "coriander",
+      "spinach",
+      "tomato"
+    ],
+    "method": "Fry the spices in oil before anything wet goes in."
+  },
+  {
+    "id": "r48",
+    "name": "Tuna sandwich",
+    "requires": [
+      "tuna",
+      "bread",
+      "mayonnaise"
+    ],
+    "optional": [
+      "pickles",
+      "lettuce",
+      "spring onion",
+      "chilli"
+    ],
+    "method": "Drain it properly. Twice."
+  },
+  {
+    "id": "r49",
+    "name": "Quesadilla",
+    "requires": [
+      "tortillas",
+      "cheese"
+    ],
+    "optional": [
+      "capsicum",
+      "onion",
+      "chilli",
+      "coriander",
+      "chicken",
+      "chickpeas"
+    ],
+    "method": "Dry pan, weight it down with something flat."
+  },
+  {
+    "id": "r50",
+    "name": "Lamb with mint",
+    "requires": [
+      "lamb",
+      "mint"
+    ],
+    "optional": [
+      "potato",
+      "garlic",
+      "lemon",
+      "peas"
+    ],
+    "method": "Rest it under foil while you finish everything else."
+  },
+  {
+    "id": "r51",
+    "name": "Hummus plate",
+    "requires": [
+      "hummus",
+      "bread"
+    ],
+    "optional": [
+      "olives",
+      "cucumber",
+      "tomato",
+      "lemon",
+      "chilli",
+      "feta"
+    ],
+    "method": "Not cooking. Still dinner."
+  },
+  {
+    "id": "r52",
+    "name": "Fish and greens",
+    "requires": [
+      "white fish fillet",
+      "lemon"
+    ],
+    "optional": [
+      "butter",
+      "asparagus",
+      "spinach",
+      "dill",
+      "garlic"
+    ],
+    "method": "Four minutes a side, no more."
+  },
+  {
+    "id": "r53",
+    "name": "Pork chops",
+    "requires": [
+      "pork chops"
+    ],
+    "optional": [
+      "mustard",
+      "apple",
+      "potato",
+      "rosemary",
+      "cabbage"
+    ],
+    "method": "Sear the fat edge first, standing them up."
   }
 ]

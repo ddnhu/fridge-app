@@ -26,11 +26,19 @@ const OUT_FILE = path.join(ROOT, 'src', 'data', 'food-embeddings.json');
 
 const IMAGE_EXTS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif']);
 
-// Several phrasings per food, averaged — more robust than a single prompt
+// Several phrasings per food, averaged — more robust than a single prompt.
+//
+// The last two are about packaging on purpose. Most of a fridge arrives in a
+// bag with its own name printed on it, and CLIP reads text in images — the
+// same weakness that makes it call an apple an iPod if you stick a label on
+// it. Here that works in our favour: a supermarket bag saying MINT should
+// land on mint, as long as these phrasings let it.
 const PROMPTS = [
   label => `a photo of ${label}.`,
   label => `a photo of ${label}, a type of food.`,
   label => `a close-up photo of ${label} in a fridge.`,
+  label => `a supermarket package of ${label}, labelled "${label}".`,
+  label => `a plastic bag of ${label} with a printed label.`,
 ];
 
 // Things the camera sees that aren't food. If one of these wins, the app

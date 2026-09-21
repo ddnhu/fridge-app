@@ -9,6 +9,9 @@ butter
 cheese
 yogurt
 cream
+sour cream
+feta
+parmesan
 
 # Vegetables
 carrot
@@ -35,6 +38,23 @@ green beans
 peas
 asparagus
 avocado
+leek
+bok choy
+kale
+chilli
+ginger
+beetroot
+snow peas
+
+# Herbs — a real fridge is full of these and the app knew none of them
+mint
+basil
+coriander
+parsley
+rosemary
+thyme
+dill
+chives
 
 # Fruit
 apple
@@ -60,6 +80,10 @@ ham
 sausages
 salmon
 prawns
+pork chops
+lamb
+tuna
+white fish fillet
 
 # Other
 tofu
@@ -70,3 +94,14 @@ jam
 soy sauce
 tomato sauce
 mayonnaise
+mustard
+honey
+peanut butter
+olives
+pickles
+hummus
+noodles
+tortillas
+chickpeas
+coconut milk
+fish sauce
