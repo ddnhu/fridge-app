@@ -9,6 +9,7 @@
 // One element per screen may snap. Everything else drifts.
 
 import { startScan, REFUSALS_PER_SCAN } from '../recipe-engine.js';
+import { getItems } from '../fridge-store.js';
 import { escapeHTML } from '../escape-html.js';
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
@@ -28,10 +29,11 @@ export async function renderRevealScreen(container, { onBack }) {
     <section class="reveal-screen" aria-label="Tonight">
       <div class="reveal-rule"></div>
 
-      <h1 class="reveal-title"></h1>
+      <h1 class="reveal-dish"></h1>
+      <p class="reveal-accord"></p>
       <p class="reveal-method"></p>
 
-      <p class="reveal-nothing" hidden>The page is blank.</p>
+      <p class="reveal-nothing" hidden></p>
 
       <div class="reveal-foot">
         <p class="reveal-label">from the fridge</p>
@@ -45,7 +47,8 @@ export async function renderRevealScreen(container, { onBack }) {
   `;
 
   const screen     = container.querySelector('.reveal-screen');
-  const title      = container.querySelector('.reveal-title');
+  const dish       = container.querySelector('.reveal-dish');
+  const accord     = container.querySelector('.reveal-accord');
   const method     = container.querySelector('.reveal-method');
   const nothing    = container.querySelector('.reveal-nothing');
   const considered = container.querySelector('.reveal-considered');
@@ -56,7 +59,8 @@ export async function renderRevealScreen(container, { onBack }) {
   const scan = await startScan();
 
   function setMeal(meal) {
-    title.innerHTML = meal.lines
+    dish.textContent = meal.name;
+    accord.innerHTML = meal.lines
       .map(line => `<span class="line">${escapeHTML(line)}</span>`)
       .join('');
     method.textContent = meal.method;
@@ -84,9 +88,15 @@ export async function renderRevealScreen(container, { onBack }) {
   }
 
   if (!scan.meal) {
-    // Nothing in the fridge, or nothing cookable in it
+    // Two different problems, and telling them apart matters: an empty
+    // fridge is your fault, a fridge full of things that don't go together
+    // is the app's. Both stay in the printing register — type that won't set.
+    nothing.textContent = getItems().length
+      ? 'Nothing sets tonight.'
+      : 'The page is blank.';
     nothing.hidden = false;
-    title.hidden = true;
+    dish.hidden = true;
+    accord.hidden = true;
     method.hidden = true;
     refuse.hidden = true;
     screen.classList.add('play');
