@@ -140,7 +140,7 @@
   /* used for one frame to reset the reveal — see play() */
   .no-anim, .no-anim * { transition: none !important; animation: none !important; }
 
-  /* The brief, always in view while you tune — press B to hide it before
+  /* The brief, always in view while you tune — press I to hide it before
      you record. pointer-events:none so it never eats a tap. */
   .brief {
     position: fixed; bottom: 12px; left: 12px; max-width: 210px;
@@ -202,9 +202,9 @@
     }, 1400);
   }
   // pointerdown, not click: iOS Safari drops click on non-interactive elements
-  // B hides the brief for recording
+  // I hides the brief for recording
   addEventListener('keydown', e => {
-    if (e.key === 'b' || e.key === 'B') {
+    if (e.key === 'i' || e.key === 'I') {
       const b = document.querySelector('.brief');
       b.hidden = !b.hidden;
     }

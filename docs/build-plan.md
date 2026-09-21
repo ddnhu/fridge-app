@@ -151,6 +151,13 @@ Goal: **tonight it works in front of people, and then I stop.**
     pre-loaded fridge, or typing a name.
 - **Block 3 (45 min).** Rehearse the ninety seconds out loud, three times, on the phone
   you'll actually use. Time it. Write the words you'll say for each of the five beats.
+- **Block 3b (20 min). BAKE THE DIALS.** If you tuned anything with DialKit, the value
+  that actually ships is whatever default is buried in the control definition. Read the
+  settled values out of the browser — in the page console:
+  `Object.fromEntries(Object.entries(localStorage).filter(([k]) => k.startsWith('dialkit:')))`
+  — then replace each dialed value with a named constant in the CSS and drop that entry
+  from the panel. DialKit itself can stay vendored; it costs nothing and the next
+  experiment starts free. Ask me to do this; it's mechanical.
 - **Block 4 (30 min).** Final push. **Then freeze the code.** Anything you notice after
   this goes in the parking lot. Shipping something rehearsed beats shipping something
   improved.
