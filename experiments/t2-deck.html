@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1E3A2F" />
+<title>T2 — Cut The Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;1,6..96,400&display=swap" rel="stylesheet" />
+<style>
+  /* ---- T2 palette ---- */
+  :root {
+    --baize:    #1E3A2F;
+    --bone:     #E9E2D0;
+    --keyline:  #0B0D0C;
+    --cinnabar: #B32B1E;
+    --blue:     #2B4C9B;
+    --ochre:    #D9A441;
+    --gilt:     #C9A227;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+
+  body {
+    background: var(--baize);
+    font-family: 'Bodoni Moda', serif;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .table { perspective: 1400px; }
+
+  .card {
+    position: relative;
+    width: 264px;
+    height: 424px;
+    transform-style: preserve-3d;
+    /* the gilt edge — 2px only, never a fill, never a gradient */
+    box-shadow: 0 0 0 2px var(--gilt);
+  }
+
+  .face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+  }
+
+  /* The back: a dense repeating lattice whose whole job is to withhold.
+     Zero assets — pure repeating-linear-gradient. */
+  .back {
+    background-color: var(--cinnabar);
+    background-image:
+      repeating-linear-gradient( 45deg, var(--keyline) 0 1px, transparent 1px 9px),
+      repeating-linear-gradient(-45deg, var(--keyline) 0 1px, transparent 1px 9px);
+  }
+
+  .front {
+    background: var(--bone);
+    color: var(--keyline);
+    transform: rotateY(180deg);
+  }
+
+  /* the crude four-ink stencil mark above the name */
+  .mark {
+    width: 44px; height: 44px;
+    margin-bottom: 28px;
+    background:
+      linear-gradient(var(--ochre) 0 0) 0 0 / 100% 50% no-repeat,
+      linear-gradient(var(--blue)  0 0) 0 100% / 100% 50% no-repeat;
+    box-shadow: 0 0 0 1.5px var(--keyline);
+  }
+
+  .name {
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  .suit {
+    margin-top: 28px;
+    font-style: italic;
+    font-size: 14px;
+    text-align: center;
+    opacity: .75;
+  }
+
+  /* =====================================================================
+     YOUR 30 MINUTES START HERE.
+
+     Spec to hit:
+       - the card turns on its VERTICAL axis
+             rotateY 420ms cubic-bezier(.45,0,.15,1)
+             with a 3deg overshoot, then 60ms settle
+       - the gilt edge catches a 200ms light sweep as it passes 90deg
+       - total ~480ms. Ceremonial, not fast.
+
+     The .play class is added on tap. Card starts face-DOWN.
+     ===================================================================== */
+
+  .card       { /* TODO: resting state = face down */ }
+  .play .card { /* TODO: the turn */ }
+
+  /* the light sweep across the gilt edge at 90deg — optional, do it last */
+  .card::after { /* TODO */ }
+
+  /* ===================== end of your 30 minutes ====================== */
+
+  .hint {
+    position: fixed; bottom: 8px; left: 0; right: 0;
+    text-align: center; font-size: 10px; color: var(--bone); opacity: .35;
+    letter-spacing: .1em; text-transform: uppercase; font-family: system-ui, sans-serif;
+  }
+</style>
+</head>
+<body>
+  <div class="table" id="stage">
+    <div class="card">
+      <div class="face back"></div>
+      <div class="face front">
+        <div class="mark"></div>
+        <p class="name">Minced beef<br />Soft carrot<br />The last of the milk</p>
+        <p class="suit">beef &middot; milk &middot; the last carrot</p>
+      </div>
+    </div>
+  </div>
+  <p class="hint">tap to replay</p>
+
+<script>
+  const stage = document.getElementById('stage');
+  function play() {
+    stage.classList.remove('play');
+    void stage.offsetWidth;
+    stage.classList.add('play');
+  }
+  document.body.addEventListener('click', play);
+  play();
+</script>
+</body>
+</html>

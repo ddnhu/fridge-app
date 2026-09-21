@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#F3EDE1" />
+<title>T1 — Tonight In Paperback</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet" />
+<style>
+  /* ---- T1 palette (from the spec — don't invent new colours) ---- */
+  :root {
+    --paper:  #F3EDE1;
+    --ink:    #16130F;
+    --band:   #E4551F;
+    --braise: #6E2230;
+    --soup:   #B8B08D;
+    --cold:   #2E4A46;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { height: 100%; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Archivo', sans-serif;
+    /* no shadows, no gradients, no radius over 2px */
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .cover {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 24px;
+  }
+
+  /* The Marber band: fixed top third, title always in the same place */
+  .band {
+    background: var(--band);
+    height: 88px;
+    margin: 0 -24px;
+  }
+
+  .title {
+    margin-top: 40px;
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 1.08;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .title .line { display: block; }
+
+  .label {
+    margin-top: auto;
+    margin-bottom: 16px;
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+  }
+
+  .accession {
+    margin-bottom: 40px;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* =====================================================================
+     YOUR 30 MINUTES START HERE.
+     Everything above is structure. Everything below is the argument.
+
+     Spec to hit:
+       - band slides down from the top    240ms cubic-bezier(.2,.8,.2,1)
+       - title lines stagger              90ms apart
+       - accession number stamps LAST     120ms ease-out
+                                          scale(1.04) -> 1, rotate(-0.5deg)
+                                          and it STAYS crooked
+       - total ~900ms
+
+     The .play class is added on tap. Animate from that.
+     ===================================================================== */
+
+  /* --- starting states (before the reveal) --- */
+  .band      { /* TODO */ }
+  .title .line { /* TODO */ }
+  .accession { /* TODO */ }
+
+  /* --- the reveal --- */
+  .play .band      { /* TODO */ }
+  .play .line:nth-child(1) { /* TODO */ }
+  .play .line:nth-child(2) { /* TODO */ }
+  .play .line:nth-child(3) { /* TODO */ }
+  .play .accession { /* TODO */ }
+
+  /* ===================== end of your 30 minutes ====================== */
+
+  .hint {
+    position: fixed; bottom: 8px; left: 0; right: 0;
+    text-align: center; font-size: 10px; opacity: .35;
+    letter-spacing: .1em; text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+  <div class="cover" id="stage">
+    <div class="band"></div>
+    <h1 class="title">
+      <span class="line">Minced beef</span>
+      <span class="line">Soft carrot</span>
+      <span class="line">The last of the milk</span>
+    </h1>
+    <p class="label">from the fridge of Danni Hu, 21 September</p>
+    <p class="accession">No. 41 in the series</p>
+  </div>
+  <p class="hint">tap to replay</p>
+
+<script>
+  const stage = document.getElementById('stage');
+  function play() {
+    stage.classList.remove('play');
+    void stage.offsetWidth;          // force reflow so the animation restarts
+    stage.classList.add('play');
+  }
+  document.body.addEventListener('click', play);
+  play();
+</script>
+</body>
+</html>
