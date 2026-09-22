@@ -44,7 +44,7 @@ export function renderCameraScreen(container, { onContinue }) {
                      autocomplete="off" autocapitalize="none" spellcheck="false" readonly
                      placeholder="Type what it is" aria-label="Food name" />
               <svg class="detection-edit" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <path d="M10.5 3.5L12.5 5.5M3 13L3.5 10.5L11 3L13 5L5.5 12.5L3 13Z" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M10.5 3.5L12.5 5.5M3 13L3.5 10.5L11 3L13 5L5.5 12.5L3 13Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </label>
             <datalist id="food-options"></datalist>
@@ -57,8 +57,8 @@ export function renderCameraScreen(container, { onContinue }) {
       <div class="controls">
         <button class="btn-undo" type="button" aria-label="Undo last add">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
-            <path d="M12 8L6 14L12 20" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M6 14H19C23 14 26 17 26 21C26 25 23 28 19 28H14" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M12 8L6 14L12 20" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6 14H19C23 14 26 17 26 21C26 25 23 28 19 28H14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
           </svg>
         </button>
         <button class="btn-capture" type="button" aria-label="Add to fridge"></button>
@@ -315,11 +315,21 @@ export function renderCameraScreen(container, { onContinue }) {
     });
   }
 
+  // A correction admits the error without apologising: type that was set
+  // wrong is RESET. Only says so when you've actually overruled the camera —
+  // confirming its own guess isn't a correction.
+  function noteCorrection() {
+    const chosen = nameInput.value.trim().toLowerCase();
+    if (!chosen || !detection || chosen === detection.label) return;
+    setStatus(`Reset. ${chosen.charAt(0).toUpperCase()}${chosen.slice(1)}.`);
+  }
+
   guessList.addEventListener('click', e => {
     const chip = e.target.closest('.guess-chip');
     if (!chip) return;
     nameInput.value = chip.textContent;
     highlightGuess();
+    noteCorrection();
   });
 
   // Select the whole name on tap so typing replaces it (iOS needs the delay)
@@ -327,6 +337,7 @@ export function renderCameraScreen(container, { onContinue }) {
     if (!nameInput.readOnly) setTimeout(() => nameInput.setSelectionRange(0, nameInput.value.length), 0);
   });
   nameInput.addEventListener('input', highlightGuess);
+  nameInput.addEventListener('change', noteCorrection);
   nameInput.addEventListener('keydown', e => {
     if (e.key === 'Enter') nameInput.blur();
   });
@@ -369,7 +380,9 @@ export function renderCameraScreen(container, { onContinue }) {
     updateUndoButton();
     flash();
     resume();
-    setStatus(`Added ${quantity} × ${name}`);
+    // Type is SET. The quantity only appears when there's more than one,
+    // because "ONION — set" is the line and ×1 is noise in it.
+    setStatus(`${name.toUpperCase()}${quantity > 1 ? ` ×${quantity}` : ''} — set`);
     fillSuggestions();
   });
 
@@ -384,7 +397,7 @@ export function renderCameraScreen(container, { onContinue }) {
     removeQuantity(last.name, last.quantity);
     if (last.learned) unlearnLast(last.name);
     updateUndoButton();
-    setStatus(`Removed ${last.quantity} × ${last.name}`);
+    setStatus(`${last.name.toUpperCase()}${last.quantity > 1 ? ` ×${last.quantity}` : ''} — removed`);
   });
 
   // --- continue: leave the camera ---

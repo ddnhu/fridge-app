@@ -17,7 +17,7 @@ export function renderFridgeScreen(container, { onBack, onPress }) {
         <h1 class="fridge-title">My fridge</h1>
       </header>
       <ul class="fridge-list"></ul>
-      <p class="fridge-empty" hidden>Your fridge is empty.<br />Take a photo of something to add it.</p>
+      <p class="fridge-empty" hidden>Nothing set yet. Photograph something to add it.</p>
       ${pressBarHTML('Press')}
     </section>
   `;

@@ -8,9 +8,9 @@
 
 body {
   margin: 0;
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background-color: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-display);
   font-size: var(--font-size-body);
   line-height: var(--line-height-body);
   min-height: 100dvh;
@@ -22,9 +22,20 @@ body {
   min-height: 100dvh;
 }
 
-/* Camera screen */
+/* ===========================================================================
+   The camera — Red Stamp, inverted
 
-/* Full-screen background video — sits behind the overlay */
+   The one screen in the app with a PHOTOGRAPH behind it. Cream chrome over
+   live video is unreadable, and dimming the video enough to fix that ruins
+   the thing you are pointing at. So this screen runs the same two inks the
+   other way up: warm ink ground, cream type.
+
+   Ink while you're looking at the fridge. Cream once it's written down.
+
+   Nothing here snaps. The camera is not part of the decision, so there is
+   also no red on this screen.
+   =========================================================================== */
+
 .camera-bg {
   position: fixed;
   inset: 0;
@@ -49,7 +60,11 @@ body {
   min-height: 100dvh;
   padding: var(--space-3);
   gap: var(--space-3);
-  background-color: rgba(0, 0, 0, 0.6);
+  /* warm ink at 62%, not neutral black at 60% — the difference is visible
+     against skin and against a fridge interior, which is where this sits */
+  background-color: rgba(20, 18, 16, 0.62);
+  color: var(--cream);
+  font-family: var(--font-display);
 }
 
 .preview-area {
@@ -57,9 +72,9 @@ body {
   isolation: isolate;
   overflow: hidden;
   flex: 1;
-  background-color: var(--color-surface);
-  border-radius: var(--radius-lg);
-  border: none;
+  background-color: rgba(20, 18, 16, 0.55);
+  border: 1px solid rgba(245, 241, 230, 0.22);
+  border-radius: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -88,8 +103,8 @@ body {
 .capture-flash {
   position: absolute;
   inset: 0;
-  background-color: #ffffff;
-  border-radius: var(--radius-lg);
+  background-color: var(--cream);
+  border-radius: 0;
   pointer-events: none;
   animation: flash 0.4s ease-out forwards;
 }
@@ -102,13 +117,16 @@ body {
 .preview-label {
   margin: 0;
   font-size: var(--font-size-body);
-  color: var(--color-text-muted);
+  font-weight: 500;
+  color: var(--cream);
 }
 
 .preview-sublabel {
   margin: 0;
   font-size: var(--font-size-sm);
-  color: var(--color-border);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(245, 241, 230, 0.55);
 }
 
 /* Controls strip */
@@ -119,31 +137,31 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* padding-top pushes the button down so the outer ring lands exactly 20px below the preview */
-  padding-top: 14px;
-  padding-bottom: var(--space-4);
-  /* reserve height so absolute-positioned side buttons don't collapse the row */
+  padding-top: var(--space-2);
+  padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom, 0px));
   min-height: 88px;
 }
 
+/* The shutter stays round. A round shutter is a camera affordance, not a
+   card — the radius rule is about boxes pretending to be soft, and this is
+   the one control in the app that is quoting a physical object on purpose. */
 .btn-capture {
   position: relative;
   width: 72px;
   height: 72px;
   border-radius: var(--radius-full);
-  background-color: var(--color-primary-bg);
+  background-color: var(--cream);
   border: none;
   cursor: pointer;
   flex-shrink: 0;
 }
 
-/* outer ring: sits 3px outside the button edge, 3px thick */
 .btn-capture::after {
   content: "";
   position: absolute;
-  inset: -9px;
+  inset: -8px;
   border-radius: var(--radius-full);
-  border: 3px solid #ffffff;
+  border: 2px solid var(--cream);
   pointer-events: none;
 }
 
@@ -156,29 +174,29 @@ body {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 72px;
-  height: 72px;
-  border-radius: var(--radius-full);
-  background-color: rgba(255, 255, 255, 0.1);
-  border: none;
-  color: var(--color-text-muted);
+  width: 56px;
+  height: 56px;
+  border-radius: 0;
+  background: none;
+  border: 1px solid rgba(245, 241, 230, 0.28);
+  color: var(--cream);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.btn-undo {
-  left: 20px;
+.btn-undo    { left: var(--space-3); }
+.btn-continue { right: var(--space-3); }
+
+.btn-undo svg, .btn-continue img { width: 24px; height: 24px; }
+
+.btn-undo:active, .btn-continue:active {
+  background-color: rgba(245, 241, 230, 0.12);
 }
 
-.btn-continue {
-  right: 20px;
-}
-
-/* Undo with nothing to undo */
 .btn-undo.is-waiting {
-  opacity: 0.4;
+  opacity: 0.35;
 }
 
 /* Detection overlay */
@@ -195,24 +213,24 @@ body {
   pointer-events: none;
 }
 
+/* Square corner marks, not a rounded viewfinder. Registration marks on a
+   sheet: you are lining something up so it can be printed. */
 .detection-frame {
   width: 200px;
   height: 200px;
   flex-shrink: 0;
-  border: 2px solid rgba(255, 255, 255, 0.9);
-  border-radius: 32px;
-  /* Mask reveals only the four corner windows (32px curve + 32px arm = 64px each side).
-     The full rounded border is drawn first, then clipped to just the corners. */
+  border: 2px solid rgba(245, 241, 230, 0.9);
+  border-radius: 0;
   -webkit-mask:
-    linear-gradient(#000 0 0) 0    0    / 52px 52px no-repeat,
-    linear-gradient(#000 0 0) 100% 0    / 52px 52px no-repeat,
-    linear-gradient(#000 0 0) 0    100% / 52px 52px no-repeat,
-    linear-gradient(#000 0 0) 100% 100% / 52px 52px no-repeat;
+    linear-gradient(#000 0 0) 0    0    / 40px 40px no-repeat,
+    linear-gradient(#000 0 0) 100% 0    / 40px 40px no-repeat,
+    linear-gradient(#000 0 0) 0    100% / 40px 40px no-repeat,
+    linear-gradient(#000 0 0) 100% 100% / 40px 40px no-repeat;
   mask:
-    linear-gradient(#000 0 0) 0    0    / 52px 52px no-repeat,
-    linear-gradient(#000 0 0) 100% 0    / 52px 52px no-repeat,
-    linear-gradient(#000 0 0) 0    100% / 52px 52px no-repeat,
-    linear-gradient(#000 0 0) 100% 100% / 52px 52px no-repeat;
+    linear-gradient(#000 0 0) 0    0    / 40px 40px no-repeat,
+    linear-gradient(#000 0 0) 100% 0    / 40px 40px no-repeat,
+    linear-gradient(#000 0 0) 0    100% / 40px 40px no-repeat,
+    linear-gradient(#000 0 0) 100% 100% / 40px 40px no-repeat;
 }
 
 .detection-info {
@@ -234,35 +252,38 @@ body {
 
 .detection-label {
   width: 216px;
-  color: #ffffff;
+  color: var(--cream);
   /* 16px stops iOS Safari zooming in when the field is focused */
   font-size: 16px;
   font-weight: 600;
-  font-family: inherit;
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  background-color: rgba(20, 18, 16, 0.72);
+  border: 1px solid rgba(245, 241, 230, 0.4);
+  border-radius: 0;
   outline: none;
   padding: var(--space-2) var(--space-5);
-  border-radius: var(--radius-full);
 }
 
 .detection-label::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(245, 241, 230, 0.55);
   font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .detection-label:focus {
-  border-color: #ffffff;
+  border-color: var(--cream);
 }
 
-/* Pencil icon: signals the name can be edited */
 .detection-edit {
   position: absolute;
-  right: var(--space-3);
+  right: var(--space-2);
   top: 50%;
   transform: translateY(-50%);
-  opacity: 0.7;
+  color: var(--cream);
+  opacity: 0.6;
   pointer-events: none;
 }
 
@@ -270,7 +291,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-2);
+  gap: var(--space-1);
   max-width: 280px;
 }
 
@@ -278,57 +299,61 @@ body {
   display: none;
 }
 
+/* Alternatives, set as type rather than as pills. A pill is a soft target
+   from a different design language; these are just the other readings. */
 .guess-chip {
-  color: #ffffff;
-  font-family: inherit;
+  color: var(--cream);
+  font-family: var(--font-display);
   font-size: var(--font-size-sm);
-  background-color: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: var(--radius-full);
-  padding: var(--space-1) var(--space-3);
+  letter-spacing: 0.06em;
+  background-color: rgba(20, 18, 16, 0.72);
+  border: 1px solid rgba(245, 241, 230, 0.3);
+  border-radius: 0;
+  padding: var(--space-1) var(--space-2);
   min-height: 32px;
   cursor: pointer;
 }
 
 .guess-chip[aria-pressed="true"] {
-  color: #000000;
-  background-color: #ffffff;
-  border-color: #ffffff;
+  color: var(--ink);
+  background-color: var(--cream);
+  border-color: var(--cream);
 }
 
-/* Model download progress, "Identifying…", alternative guesses, save confirmation */
 .detection-status {
   margin: 0;
   max-width: 280px;
   min-height: 1.5em;
   text-align: center;
-  color: #ffffff;
+  color: rgba(245, 241, 230, 0.75);
   font-size: var(--font-size-sm);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  letter-spacing: 0.06em;
 }
 
 .detection-status:empty {
   visibility: hidden;
 }
 
+/* The stepper, on ink */
 .qty-stepper {
   display: flex;
   align-items: center;
   gap: var(--space-1);
-  background-color: rgba(0, 0, 0, 0.4);
-  padding: 2px 4px 2px 8px;
-  border-radius: var(--radius-full);
+  background-color: rgba(20, 18, 16, 0.72);
+  border: 1px solid rgba(245, 241, 230, 0.3);
+  border-radius: 0;
+  padding: 0 var(--space-2);
 }
 
 .qty-btn {
   background: none;
   border: none;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--cream);
   cursor: pointer;
   padding: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-full);
+  width: 40px;
+  height: 40px;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -336,54 +361,69 @@ body {
 }
 
 .qty-btn:active {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(245, 241, 230, 0.15);
 }
 
 .qty-value {
-  color: #ffffff;
+  color: var(--cream);
   font-size: var(--font-size-body);
-  font-weight: 600;
-  min-width: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  min-width: 24px;
   text-align: center;
 }
 
-/* Fridge screen */
+/* ===========================================================================
+   The fridge — Red Stamp
+
+   A page, not a dashboard. The list is a ruled inventory: hairlines, no
+   cards, no radius, everything locked to one left edge. The red press bar at
+   the foot is the first of red's three marks — this is where the decision is
+   handed over.
+   =========================================================================== */
 
 .fridge-screen {
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-  padding: var(--space-3);
-  padding-top: calc(var(--space-3) + env(safe-area-inset-top, 0px));
-  gap: var(--space-3);
-  background-color: var(--color-bg);
+  padding: 0 var(--space-4);
+  padding-top: calc(var(--space-4) + env(safe-area-inset-top, 0px));
+  gap: 0;
+  background-color: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-display);
 }
 
 .fridge-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
 }
 
 .fridge-title {
   margin: 0;
-  font-size: var(--font-size-heading);
-  font-weight: 600;
+  font-size: clamp(28px, 8vw, 34px);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.01em;
 }
 
 .btn-back {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  min-height: 48px;
+  min-height: 40px;
   background: none;
   border: none;
-  color: var(--color-text);
-  font-family: inherit;
-  font-size: var(--font-size-body);
+  color: var(--faint);
+  font-family: var(--font-display);
+  font-size: var(--font-size-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   cursor: pointer;
-  padding: var(--space-1) 0;
+  padding: 0;
 }
 
 .fridge-list {
@@ -392,16 +432,20 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: 0;
+  /* the rule above the first row closes the list at the top, the way a
+     ruled ledger is closed */
+  border-top: 1px solid rgba(20, 18, 16, 0.14);
 }
 
 .fridge-item {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  padding: var(--space-2);
-  background-color: var(--color-surface);
-  border-radius: var(--radius-md);
+  padding: var(--space-2) 0;
+  background: none;
+  border-radius: 0;
+  border-bottom: 1px solid rgba(20, 18, 16, 0.14);
 }
 
 .fridge-item-name {
@@ -411,44 +455,64 @@ body {
 
 .fridge-item-name input {
   width: 100%;
-  color: var(--color-text);
+  color: var(--ink);
   /* 16px stops iOS Safari zooming in when the field is focused */
   font-size: 16px;
-  font-family: inherit;
+  font-weight: 500;
+  font-family: var(--font-display);
   background: none;
-  border: 1px solid transparent;
-  border-radius: var(--radius-sm);
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
   outline: none;
-  padding: var(--space-2);
+  padding: var(--space-1) 0;
 }
 
 .fridge-item-name input:focus {
-  border-color: var(--color-text-muted);
-  background-color: var(--color-surface-raised);
+  border-bottom-color: var(--ink);
 }
 
+/* On cream the stepper loses its box entirely. Over video it needs a ground
+   to be legible; on a page of hairlines it would be the only boxed object,
+   and it was reading louder than the food — which is the wrong way round for
+   an inventory. Here it is just a figure with two faint chevrons. */
+.fridge-item .qty-stepper {
+  background: none;
+  border: 0;
+  padding: 0;
+  gap: 0;
+}
+.fridge-item .qty-btn        { width: 32px; height: 32px; color: var(--faint); }
+.fridge-item .qty-btn svg    { width: 14px; height: 14px; }
+.fridge-item .qty-btn:active { background-color: rgba(20, 18, 16, 0.08); }
+.fridge-item .qty-value      { color: var(--ink); min-width: 16px; font-weight: 500; }
+
 .btn-remove {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   background: none;
   border: none;
-  border-radius: var(--radius-full);
-  color: var(--color-text-muted);
+  border-radius: 0;
+  color: var(--faint);
   cursor: pointer;
 }
 
 .btn-remove:active {
-  background-color: var(--color-surface-raised);
+  background-color: rgba(20, 18, 16, 0.08);
 }
 
 .fridge-empty {
   margin: auto 0;
-  text-align: center;
-  color: var(--color-text-muted);
+  max-width: 24ch;
+  text-align: left;
+  color: var(--faint);
+  font-family: var(--font-label);
+  font-style: italic;
+  font-size: var(--font-size-body);
 }
 
 .fridge-empty[hidden] {
