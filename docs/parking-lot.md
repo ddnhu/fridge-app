@@ -5,7 +5,7 @@ Friday demo; the point of writing it down is to stop re-deciding it at midnight.
 
 ---
 
-## 2026-09-23 — the Diaries view
+## 2026-09-22 — the Diaries view
 
 A shelf of spines, one per meal cooked, each spine banded with the colours of
 what went into it and set with the dish name running vertically. Danni's
@@ -25,7 +25,7 @@ and it's the reason this isn't a quick build.
 
 ---
 
-## 2026-09-23 — OFF the parking lot: the post-meal photo
+## 2026-09-22 — OFF the parking lot: the post-meal photo
 
 Parked on 21 September as "needs a post-meal capture flow, storage and a
 history view". Built today at a third of that scope: the capture flow and the

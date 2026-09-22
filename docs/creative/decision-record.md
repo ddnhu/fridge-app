@@ -1,10 +1,9 @@
 # Decision Record — Red Stamp
 
 Decided 21 September 2026. Session 2 (Decide), revised after the palette attack.
-**Updated 23 September to match what actually shipped.**
+**Updated 22 September to match what actually shipped.**
 
-**One current file. The direction is not reopened this week.** The items under
-STILL UNDECIDED are, because they were never decided in the first place.
+**One current file. The direction is not reopened this week.**
 
 ---
 
@@ -17,8 +16,24 @@ rules would have told you to rebuild something you'd deliberately chosen.
 | Marked | Means |
 |---|---|
 | plain | shipped, and argued for |
-| **changed 23 Sep** | shipped differently from the 21 Sep record, with the reason |
-| **UNDECIDED** | shipped differently and *nobody argued it* — your call, still open |
+| **changed 22 Sep** | shipped differently from the 21 Sep record, with the reason |
+| **closed 22 Sep** | shipped differently, never argued, and now ratified — *stop reopening it* |
+
+### Closed on 22 September
+
+Four things had shipped without anyone deciding them. All four were put to Danni
+and all four **keep what is in production**. They are settled:
+
+| | 21 Sep record wanted | Production keeps |
+|---|---|---|
+| Ground | warm ink `#141210` | **cream `#F5F1E6`** |
+| Stamp angle | −6° | **−2°** |
+| Red | two uses | **three** — press, rule, stamp |
+| Dish title | 34px uppercase | **fluid, sentence case** |
+
+The reasoning for each is written where it belongs below. The point of writing it
+down is that a decision without a reason gets reopened at midnight; these now have
+reasons attached, and the reasons are the defence.
 
 ---
 
@@ -85,7 +100,7 @@ gets cut.
 | Screen | What snaps |
 |---|---|
 | Reveal | the red date stamp |
-| Steps | the photograph landing in the plate — **added 23 Sep** |
+| Steps | the photograph landing in the plate — **added 22 Sep** |
 | Camera, fridge | nothing |
 
 The photo's snap is the same 180ms and the same easing as the stamp, deliberately: the
@@ -100,21 +115,42 @@ to the two ends of the night.
 
 | Token | Hex | Lives where |
 |---|---|---|
-| `--cream` | `#F5F1E6` | **the ground of the reveal and the steps** — UNDECIDED, see below |
+| `--cream` | `#F5F1E6` | the ground of the reveal and the steps — **closed 22 Sep** |
 | `--ink` | `#141210` | all type. Warm black, never neutral |
-| `--red` | `#E4290F` | the press bar, the stamp, and the reveal's top rule |
+| `--red` | `#E4290F` | the press bar, the reveal's top rule, the stamp — **closed 22 Sep** |
 | `--faint` | `#8A8275` | the diary label, "also considered", step numerals, pantry label |
 
 Refuses: a third ink, gradients, shadows, radius over 2px, and any colour sampled from
 food.
 
-**On red — UNDECIDED.** The 21 Sep rule was "exactly two moments: the button, and the
-stamp. Red appearing anywhere else means something has slipped." The same document then
-specified the reveal's top rule in red, which is a third. Both cannot be true.
+**The ground is cream — closed 22 Sep.** The 21 Sep record killed cream on a luminance
+argument: it sits in the same range as wood and stone, so on a counter under kitchen
+lights the screen disappears into the bench.
 
-> The honest options: either the rule is red and the law becomes *"red marks the decision
-> and the page it lands on"* (three uses, coherent), or the rule becomes ink and the law
-> survives as written (two uses, stricter). **Nobody has picked.** The app ships three.
+> What that argument actually killed was **cream plus timid**. Cream carrying bold
+> marks had never been tested — which is why the experiments were given a ground toggle,
+> so the two could be compared by flipping rather than from memory. Flipped, cream won,
+> and the red stamp is a mark on a page rather than a light in one. Cream is the ground.
+>
+> The luminance risk is real and has not been disproved; it is now **reversal condition
+> 1** and nothing else. If it fails on the bench at night, that condition fires. Until
+> it does, this is decided.
+
+**Red has three marks, and they are the three stages of one act — closed 22 Sep.** The
+21 Sep rule said "exactly two moments", then specified a red rule, which made three. The
+law is rewritten to match what shipped, and it still constrains:
+
+| Stage | Mark | Reads as |
+|---|---|---|
+| Handover | the press bar | you give the decision away |
+| Arrival | the 2px rule across the top of the reveal | the page it lands on |
+| Closure | the stamp | it can't be taken back |
+
+> **Red belongs to the act of deciding, from the press to the stamp, and to nothing
+> else.** It never appears on a screen outside that act — not on the camera, not on the
+> fridge list, and deliberately **not on the steps screen**, where the deciding is over
+> and only cooking is left. That is a sharper test than counting to two: you can check it
+> by asking *is this screen part of the decision?* rather than by keeping a tally.
 
 ### Type, as built
 
@@ -129,12 +165,22 @@ specified the reveal's top rule in red, which is a third. Both cannot be true.
 | Stamp date | Archivo 700 | 15px, `letter-spacing .14em`, uppercase, cream knocked out of red |
 | Button | Archivo 600 | 13px, `letter-spacing .16em`, uppercase |
 
-**changed 23 Sep — the title is not uppercase and not 34px flat.** The 21 Sep record
-specified `34px / letter-spacing .06em / uppercase`. The build shipped a fluid sentence-case
-title at negative tracking. This was never argued; it is recorded here as what exists.
-Sentence case is defensible — a dish name is a name, not a headline, and "Sweet potato and
-sausages" in caps at 48px is four lines — but **if you want the caps back, say so; it's a
-three-line change.**
+**The dish title is fluid and sentence case — closed 22 Sep.** The 21 Sep record specified
+`34px / letter-spacing .06em / uppercase`. Production keeps what shipped, and the reason
+is that the title is doing a different job from the one the record imagined:
+
+> **A dish name is a name, not a headline.** Caps are for the stamp, where the type is a
+> mark stamped onto a document by procedure. The dish is the thing itself, and setting it
+> in caps makes the app announce the answer rather than hand it to you — which is the
+> *copy* channel trying to be bold, and this direction gives boldness to colour instead.
+>
+> It is also the only setting that survives the content. "Sweet potato and sausages" at
+> 48px in letterspaced caps is four lines; in sentence case at the same size it is two.
+> Reversal condition 3 exists precisely to catch a format that can't hold real names, and
+> caps would have walked the title straight into it.
+
+Negative tracking (`-0.01em`) belongs with it: at 48px, optical tracking wants to come in,
+not out. The `+.06em` in the 21 Sep record was written for 34px caps and does not transfer.
 
 Nothing is centred, anywhere. The step numerals sit *above* their steps rather than beside
 them precisely to hold that: beside them, the step text starts 34px in and the page loses
@@ -149,7 +195,7 @@ its single left edge.
 | Radius | `0` on every Red Stamp surface. Max `2px` |
 | Shadows | none, ever |
 
-**Scope correction, 23 Sep.** The "radius 0, no exceptions" rule applies to the screens
+**Scope correction, 22 Sep.** The "radius 0, no exceptions" rule applies to the screens
 built in this direction — the reveal, the steps, the press bar. The camera and fridge
 screens still run on the pre-direction theme and use 8/16/24px radii and pill shapes.
 That is not an exception to the rule; it is **two design systems in one app**, and it is
@@ -176,7 +222,7 @@ its own block and never corrects. It is the hand in the machine.
 
 ### b) THE REVEAL
 
-**changed 23 Sep — the title is the dish, and the three staggered lines are the
+**changed 22 Sep — the title is the dish, and the three staggered lines are the
 ingredients.** The 21 Sep record staggered *the title* across three lines. The build
 found that the reveal never named what you were cooking — you got ingredients and a
 method and had to infer the dish. The dish is the answer to the question you pressed the
@@ -194,12 +240,22 @@ answer. This was the right call and the record was simply never updated.
 | 1300ms | `Steps` button | fade, 400ms. Until the decision closes there is nothing to go and do |
 | ~1700ms | — | done |
 
-**On the angle — UNDECIDED.** The 21 Sep record argued at length for **−6°**: −2° is
-right for rotated text on paper, but wrong for a rotated *coloured block*, whose hard edge
-reads as a build error at small angles. **The app ships −2°.** The build never applied the
-−6°. You have since named −2° as protected, so −2° is recorded as the shipped truth — but
-be aware you are protecting a value the record argues against, and you have not seen −6°
-on a phone. *Worth one look before the freeze.*
+**The stamp sits at −2° — closed 22 Sep.** The 21 Sep record argued at length for −6°: −2°
+is right for rotated text on paper, but wrong for a rotated *coloured block*, whose hard
+edge reads as a build error at small angles.
+
+> **That argument was made from reasoning; −2° has been judged by looking.** It has been
+> on a phone, in the hand, many times since, and it reads as a hand that didn't quite line
+> the stamp up — not as a build error. Decided by looking beats decided by arguing, and
+> that is the method this whole project runs on.
+>
+> There is a second reason it holds. The stamp is **not carrying the hand on its own**:
+> the date misses its own red field by 2px and never corrects. With the misregistration
+> doing that work, the angle doesn't have to shout to be read as applied rather than
+> placed. −6° would be two marks making the same point, and one of them would start to
+> look like a style.
+
+**−2° is protected. It is not reopened.**
 
 **On the tempo.** 21 Sep estimated ~1180ms. As built the stamp lands at 1300ms and the
 Steps button settles at 1700ms. Whether that is too slow at 11pm is still open.
@@ -216,7 +272,7 @@ Steps button settles at 1700ms. Whether that is too slow at 11pm is still open.
 
 Unlimited rerolls destroy closure, and closure is the thesis.
 
-### d) THE STEPS — added 23 September
+### d) THE STEPS — added 22 September
 
 Its own screen, because steps are read differently from a decision — mid-cook, one-handed,
 more than once — and because the reveal has to stay a single held moment rather than a
@@ -250,7 +306,7 @@ camera to find salt would be absurd, and scoring it would let a full-looking fri
 | Diary line | `from the fridge of Danni Hu` | `from the fridge` ✗ |
 | Rejection | `Returned. Two left.` | `Not that · Two left` ✗ |
 | Steps / pantry | — | `Steps`, `from the pantry` |
-| The plate | — | `when it's done` → `cooked 23 September` |
+| The plate | — | `when it's done` → `cooked 22 September` |
 
 **The three ✗ lines that live on the camera screen were never written.** They belong to
 the pre-direction screens and will only be true once those screens are brought across.
@@ -260,22 +316,31 @@ does the work and the writing doesn't have to.
 
 ---
 
-## STILL UNDECIDED — the list to clear before Thursday
+## STILL OPEN — the list to clear before Thursday
 
-1. **The ground.** The record kills cream (it sits in the same luminance range as wood
-   and stone, so on a counter under kitchen lights the screen disappears into the bench)
-   and makes warm ink one of four guardrails, with "rebuild" as the remedy. **The app
-   ships cream, and it was never argued** — it went in with the reveal build. The
-   experiments carry a ground toggle so the two can be compared by flipping rather than
-   from memory. *Flip it once on the bench, at night, and settle it.*
-2. **Red: two uses or three.** See Palette.
-3. **The stamp: −2° or −6°.** See the reveal.
-4. **Caps or sentence case on the dish title.** See Type.
-5. **One design system or two.** The camera and fridge screens are still the old dark
-   theme. Cutting this was a deliberate, priced trade on 23 Sep, but it means two of the
-   five demo beats look like a different app.
-6. Thin red rule vs a thick top band; Archivo vs a warmer grotesque; whether the reveal
-   is too slow at 11pm.
+Four items were closed on 22 September (ground, stamp angle, red, title case). What is
+left is one real decision and three small ones.
+
+**1. One design system, or two.** The only expensive item on this page.
+
+| | |
+|---|---|
+| The problem | The camera and fridge screens still run the pre-direction dark theme: `#0a0a0a`, white, grey, system sans, 8–24px radii, pill shapes. The press bar, reveal and steps run Red Stamp |
+| Why it matters | Beats 1, 2 and 5 of the five-beat demo are on the old screens. A visitor sees two apps |
+| Why it's open | Cutting it was a deliberate, priced trade on 22 Sep — it bought the steps screen and the photograph |
+| Also downstream | `index.html` sets `theme-color: #0a0a0a`, correct while the camera is dark and wrong the moment the app is cream. It moves when this moves, not before |
+| And | the three unwritten microcopy lines above all live on those screens |
+
+*If only one thing gets settled before Thursday, it is this one.*
+
+**2. Thin red rule, or a thick top band** across the top of the reveal. This is a question
+of weight, not colour — the rule is red either way and the three-mark law holds.
+
+**3. Archivo, or a warmer grotesque.**
+
+**4. The tempo.** The reveal runs to 1300ms and the Steps button settles at 1700ms. Too
+slow at 11pm? Reversal condition 2 is the test: five real uses at night, and if you tap
+through before the stamp lands, it's wrong.
 
 ---
 
@@ -284,16 +349,22 @@ does the work and the writing doesn't have to.
 The original test was: *ground is warm ink, one red used twice, 34px letterspaced caps,
 visible misregistration — if any one is missing, it's the default wearing a costume.*
 
-Three of those four are now missing, and the app is still not the default, because the
-default was `#0a0a0a` + white + grey + **system sans at 17px with no motion law**. What
-actually keeps this from sliding back is narrower and harder to fake:
+Three of those four were deliberately overruled on 22 September, and the app is still
+nothing like the default — because the default was `#0a0a0a` + white + grey + **system
+sans at 17px with no motion law**, and none of those four clauses was the thing holding
+it off. They were testing the costume.
 
-1. **Drift-then-snap, one snap per screen.** The thing no default has.
-2. **Two inks and no third**, whatever the ground turns out to be.
+The real test is narrower and much harder to fake. **Every clause below is true of the
+app today, and each is a thing a default cannot accidentally have:**
+
+1. **Drift-then-snap, one snap per screen.** A motion law with a rule about restraint.
+2. **Two inks and no third** on a cream ground — and red only inside the act of deciding.
 3. **Set type** — Archivo and EB Garamond doing different jobs, not one system sans.
-4. **The misregistration**, and now the crooked stamp, as the only imperfections.
+4. **Two imperfections and no more** — the 2px misregistration, and the stamp's −2°.
 
-If a screen has none of these, it has slid back. Rebuild that screen.
+If a screen has none of these, it has slid back. Rebuild that screen. **The camera and
+fridge screens currently have none of them**, which is not a slide back — they were never
+brought across — but it is the same remedy, and it is open item 1.
 
 ---
 
@@ -303,9 +374,9 @@ Gradients. Shadows. Radius over 2px. A third ink. Colour sampled from food. Cent
 Jokes. **Food photography as seduction** — the stock-shot, styled, sell-you-the-dish
 image that made every reference app read as generic.
 
-**changed 23 Sep — the photograph.** The 21 Sep record refused photography outright and
+**changed 22 Sep — the photograph.** The 21 Sep record refused photography outright and
 listed *"I want to add a photograph"* as reversal condition 4: wanting one means you're in
-the wrong direction. A photograph shipped on 23 September and **the condition does not
+the wrong direction. A photograph shipped on 22 September and **the condition does not
 fire**, because the record was not distinguishing two different objects:
 
 | | What it does | Verdict |
@@ -322,12 +393,12 @@ part of the direction rather than an exception to it.
 ## WHAT WOULD HAVE TO BE TRUE TO REVERSE IT
 
 1. On my phone, on my counter, with the kitchen lights on, the screen still disappears.
-   *(This is now a test of cream specifically — see UNDECIDED 1.)*
+   *(The one open question about cream. Cream is otherwise decided — see Palette.)*
 2. After five real uses at night I tap through before the stamp lands — the tempo is
    wrong and T3's 280ms was right.
 3. Real meal names overflow the title at 48px. If the format can't hold real content it
    isn't dignifying anything, it's a cage.
-4. ~~I want to add a photograph.~~ **Retired 23 Sep** — see above. Replaced by: *I want a
+4. ~~I want to add a photograph.~~ **Retired 22 Sep** — see above. Replaced by: *I want a
    styled photograph of the dish before I cook it.* That still means the wrong direction.
 5. Three people see it and describe it as a bank app or a terminal.
 
@@ -335,7 +406,7 @@ part of the direction rather than an exception to it.
 
 ## NOT DOING THIS WEEK
 
-1. **The Diaries view** — the shelf of spines, one per meal cooked. Sketched 23 Sep, in
+1. **The Diaries view** — the shelf of spines, one per meal cooked. Sketched 22 Sep, in
    `docs/parking-lot.md` with the colour question that has to be settled first. The data
    exists (`src/cooked-store.js`); the view does not.
 2. **Camera-sampled colour** from the fridge frame.
