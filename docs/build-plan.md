@@ -141,10 +141,17 @@ Goal: **tonight the app looks like `docs/direction.md` and nothing else.**
 
 **Done when:** a stranger seeing a screenshot could describe the app's personality.
 
-> **What actually happened.** Blocks 1–3 done. **Block 4 was cut** — traded for the steps
-> screen and the post-meal photo, which weren't in this plan. The camera and fridge
-> screens still run the pre-direction dark theme, so two of the five demo beats look like
-> a different app. That was the priced trade and it is the top item on Thursday's list.
+> **What actually happened.** All five blocks done, in two sittings.
+>
+> Block 4 was cut first, traded for two things that weren't in this plan at all — the
+> steps screen and the post-meal photograph — and then picked back up the same evening,
+> so the camera and fridge screens are in the direction after all. The camera keeps a
+> dark ground on purpose: it's the one screen with a photograph behind it, and cream
+> chrome over live video is unreadable. Same two inks, inverted.
+>
+> Also unplanned and done: the decision record now describes the app that exists, and the
+> four questions that had shipped without ever being decided (ground, stamp angle, red
+> count, title case) are closed in favour of production.
 
 ---
 
@@ -195,9 +202,12 @@ wasted time.
 ## If you fall behind
 
 Cut in this order, no deliberation:
-  1. Wednesday's Block 4 (camera and fridge restyling) — the reveal carries the demo.
+  1. ~~Wednesday's Block 4 (camera and fridge restyling)~~ — **done, nothing to cut here.**
   2. The rejection beat becomes a plain "give me another" button.
   3. The recipe set shrinks to 15 recipes chosen to match what's actually in your fridge.
   4. Live detection becomes a pre-loaded fridge you scan *into* as a scripted moment.
 
 Never cut: the button, the reveal, and Thursday's rehearsal.
+
+With the build finished early, the honest version of this list for Thursday is shorter:
+**cache the model on the demo phone, then rehearse.** Everything else is optional.
