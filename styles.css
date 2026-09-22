@@ -36,12 +36,17 @@ body {
    also no red on this screen.
    =========================================================================== */
 
+/* Ink behind the video, not just the video. The screen overlay is translucent
+   ink, so with no stream — permission denied, camera still starting, or a
+   device without one — it would otherwise sit on the cream body and go muddy
+   brown. The backdrop is ink whether or not anything is playing on it. */
 .camera-bg {
   position: fixed;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  background-color: var(--ink);
   z-index: 0;
   pointer-events: none;
 }
